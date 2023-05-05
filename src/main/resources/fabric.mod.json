@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "serversideguilib",
+  "version": "${version}",
+  "name": "ServerSideGuiLib",
+  "description": "Provides a library to easily create GUIs on the server side, using Chest Menus and similar",
+  "authors": [
+    "JackFred"
+  ],
+  "contact": {
+    "repo": "https://github.com/JackFred2/ServerSideGuiLib"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/serversideguilib/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "red.jackf.serversideguilib.ServerSideGuiLib"
+    ]
+  },
+  "mixins": [
+    "serversideguilib.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
