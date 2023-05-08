@@ -21,7 +21,7 @@ public class MenuBuilder {
     private final Map<Integer, Button> inputs = new HashMap<>();
     private final int maxSlots;
 
-    private MenuBuilder(Component title, MenuType.MenuSupplier<?> menuConstructor, int maxSlots) {
+    public MenuBuilder(Component title, MenuType.MenuSupplier<?> menuConstructor, int maxSlots) {
         this.title = title;
         this.menuConstructor = menuConstructor;
         this.maxSlots = maxSlots;

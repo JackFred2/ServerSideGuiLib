@@ -25,7 +25,9 @@ public class TestMenu extends Menu {
     public void open() {
         var menu = MenuBuilder.make9x6(Component.literal("SSGL Test"));
 
-        menu.addButton(0, Button.leftClick(Labels.playerHead(player).name("Pagination Test").build(), () -> {
+        menu.addButton(0, Button.leftClick(Labels.playerHead(player).name("Pagination Test")
+                .inputHint("Open", new Input.LeftClick(false))
+                .build(), () -> {
             Sounds.interact(player);
             var options = new LinkedHashMap<Label, Integer>();
             for (int i = 0; i < 500; i++) {

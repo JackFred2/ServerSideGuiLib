@@ -15,11 +15,11 @@ public class ServerSideGuiLib implements ModInitializer {
      */
     @Override
     public void onInitialize() {
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
             dispatcher.register(literal("ssgltest").executes(ctx -> {
                 new TestMenu(ctx.getSource().getPlayerOrException()).open();
                 return 0;
-            }));
-        });
+            }))
+        );
     }
 }
