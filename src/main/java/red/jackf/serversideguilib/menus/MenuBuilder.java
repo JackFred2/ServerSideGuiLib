@@ -5,27 +5,23 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.HopperMenu;
+import net.minecraft.world.inventory.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Range;
+import red.jackf.serversideguilib.ServerSideGuiLib;
 import red.jackf.serversideguilib.utils.Button;
 import red.jackf.serversideguilib.utils.SealedMenu;
-import red.jackf.serversideguilib.ServerSideGuiLib;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 
 public class MenuBuilder {
     public static final int SLOT_CLICKED_OUTSIDE = AbstractContainerMenu.SLOT_CLICKED_OUTSIDE;
     private final Component title;
-    private final BiFunction<Integer, Inventory, AbstractContainerMenu> menuConstructor;
+    private final MenuType.MenuSupplier<?> menuConstructor;
     private final Map<Integer, Button> inputs = new HashMap<>();
     private final int maxSlots;
 
-    private MenuBuilder(Component title, BiFunction<Integer, Inventory, AbstractContainerMenu> menuConstructor, int maxSlots) {
+    private MenuBuilder(Component title, MenuType.MenuSupplier<?> menuConstructor, int maxSlots) {
         this.title = title;
         this.menuConstructor = menuConstructor;
         this.maxSlots = maxSlots;
@@ -36,9 +32,17 @@ public class MenuBuilder {
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 5x1
      */
-
     public static MenuBuilder make5x1(Component title) {
         return new MenuBuilder(title, HopperMenu::new, 5);
+    }
+
+    /**
+     * Creates a 3x3 menu using the Dispenser's screen.
+     * @param title Title shown on the menu
+     * @return MenuBuilder instance for the 3x3
+     */
+    public static MenuBuilder make3x3(Component title) {
+        return new MenuBuilder(title, DispenserMenu::new, 9);
     }
 
     /**
@@ -55,7 +59,6 @@ public class MenuBuilder {
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x2
      */
-
     public static MenuBuilder make9x2(Component title) {
         return new MenuBuilder(title, ChestMenu::twoRows, 18);
     }
@@ -65,7 +68,6 @@ public class MenuBuilder {
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x3
      */
-
     public static MenuBuilder make9x3(Component title) {
         return new MenuBuilder(title, ChestMenu::threeRows, 27);
     }
@@ -75,7 +77,6 @@ public class MenuBuilder {
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x4
      */
-
     public static MenuBuilder make9x4(Component title) {
         return new MenuBuilder(title, ChestMenu::fourRows, 36);
     }
@@ -85,7 +86,6 @@ public class MenuBuilder {
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x5
      */
-
     public static MenuBuilder make9x5(Component title) {
         return new MenuBuilder(title, ChestMenu::fiveRows, 45);
     }
@@ -95,7 +95,6 @@ public class MenuBuilder {
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x6
      */
-
     public static MenuBuilder make9x6(Component title) {
         return new MenuBuilder(title, ChestMenu::sixRows, 54);
     }
@@ -129,7 +128,7 @@ public class MenuBuilder {
 
             @Override
             public AbstractContainerMenu createMenu(int invIndex, Inventory inventory, Player player) {
-                var menu = menuConstructor.apply(invIndex, inventory);
+                var menu = menuConstructor.create(invIndex, inventory);
                 ((SealedMenu) menu).seal(inputs);
                 return menu;
             }

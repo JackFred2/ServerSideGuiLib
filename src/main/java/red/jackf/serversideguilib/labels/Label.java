@@ -1,5 +1,6 @@
 package red.jackf.serversideguilib.labels;
 
+import com.google.gson.JsonArray;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -7,6 +8,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a stack in a slot; this is just the visuals.
@@ -25,10 +29,18 @@ public record Label(ItemStack stack) {
                 .build();
     }
 
+    public static Label item(ItemLike item, Component name) {
+        return builder()
+                .item(item)
+                .name(name)
+                .build();
+    }
+
     public static class LabelBuilder {
         private ItemStack stack = ItemStack.EMPTY;
         @Nullable
         private Component name = null;
+        private final List<Component> hints = new ArrayList<>();
 
         public LabelBuilder() {}
 
@@ -49,6 +61,16 @@ public record Label(ItemStack stack) {
 
         public LabelBuilder name(String name) {
             this.name = Component.literal(name).withStyle(BLANK);
+            return this;
+        }
+
+        public LabelBuilder hint(Component hint) {
+            this.hints.add(hint);
+            return this;
+        }
+
+        public LabelBuilder hint(String hint) {
+            this.hints.add(Component.literal(hint).withStyle(BLANK));
             return this;
         }
 

@@ -32,16 +32,16 @@ public class Labels {
      * Creates a player head from a given username
      * @param name Username for the head to use
      */
-    public static Label playerHead(String name) {
+    public static Label.LabelBuilder playerHead(String name) {
         var stack = new ItemStack(Items.PLAYER_HEAD);
         stack.getOrCreateTag().putString(PlayerHeadItem.TAG_SKULL_OWNER, name);
-        return Label.builder().item(stack).name(name).build();
+        return Label.builder().item(stack).name(name);
     }
 
     /**
      * Creates a head from a given player
      */
-    public static Label playerHead(ServerPlayer player) {
+    public static Label.LabelBuilder playerHead(ServerPlayer player) {
         return playerHead(player.getGameProfile().getName());
     }
 }

@@ -38,7 +38,7 @@ public class AbstractContainerMenuMixin implements SealedMenu {
             if (parsed == null) return;
             var input = this.inputs.get(slotId);
             if (input == null) return;
-            System.out.printf("%s: %s%n", slotId, parsed);
+            //System.out.printf("%s: %s%n", slotId, parsed);
             input.handler().accept(parsed);
             ci.cancel();
         }
