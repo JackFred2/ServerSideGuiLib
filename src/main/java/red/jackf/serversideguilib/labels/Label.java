@@ -67,6 +67,11 @@ public record Label(ItemStack stack) {
             return this;
         }
 
+        public LabelBuilder inputHint(Input input) {
+            this.hints.add(input.getHint());
+            return this;
+        }
+
         public LabelBuilder inputHint(String action, Input input) {
             this.hints.add(Component.literal(action + ": ").withStyle(Label.HINT).append(input.getHint()));
             return this;

@@ -15,8 +15,6 @@ import red.jackf.serversideguilib.utils.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Opens a menu for a user to select an option. Resizes from 5x1, 9x1 up to 9x6, then paginated 9x6 if overflowing.
@@ -43,26 +41,13 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
      * @param options List of {@link Label} -> option pairs to be displayed in the selector.
      * @param callback CancellableCallback with success being run when an option is selected, or failure being run on cancellation
      */
-    public SelectorMenu(ServerPlayer player, Component title, List<Pair<Label, T>> options, CancellableCallback<T> callback) {
+    protected SelectorMenu(ServerPlayer player, Component title, List<Pair<Label, T>> options, CancellableCallback<T> callback) {
         super(player, callback);
         this.title = title;
         this.options = options;
         this.paginated = options.size() >= PAGINATION_THRESHOLD;
         if (paginated) filteredOptions.addAll(options);
         updateMaxPage();
-    }
-
-    /**
-     * Creates a selection menu from a map of label -> options. You can use a linked map such as
-     * {@link java.util.LinkedHashMap}  in order to have consistent ordering in the option menu.
-     * @param player Player to create the menu for
-     * @param title Title to display on the menu
-     * @param options Map of options to be displayed in the selector. Keys should be labels displayed to the player, while
-     *                values should be what is returned.
-     * @param callback CancellableCallback with success being run when an option is selected, or failure being run on cancellation
-     */
-    public SelectorMenu(ServerPlayer player, Component title, Map<Label, T> options, CancellableCallback<T> callback) {
-        this(player, title, options.entrySet().stream().map(e -> Pair.of(e.getKey(), e.getValue())).collect(Collectors.toList()), callback);
     }
 
     private void updateMaxPage() {
@@ -131,7 +116,7 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
                     .build(), input -> {
                 if (input instanceof Input.LeftClick click && !click.shift()) {
                     Sounds.interact(player);
-                    new TextMenu(player, Component.literal("Set Filter"), this.filter, new CancellableCallback<>(s -> {
+                    Menus.string(player, Component.literal("Set Filter"), this.filter, new CancellableCallback<>(s -> {
                             Sounds.success(player);
                             this.filter = s;
                             this.filteredOptions.clear();
@@ -145,7 +130,7 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
                             Sounds.failure(player);
                             open();
                         })
-                    ).open();
+                    );
                 } else if (input instanceof Input.RightClick click && !click.shift()) {
                     this.filter = "";
                     this.filteredOptions.clear();

@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PlayerHeadItem;
+import red.jackf.serversideguilib.utils.Input;
 
 /**
  * A collection of pre-defined labels to be used.
@@ -15,17 +16,19 @@ public class Labels {
     /**
      * Static cancel button for uniformity
      */
-    public static Label CANCEL = Label.builder()
+    public static final Label CANCEL = Label.builder()
             .item(Items.BARRIER)
             .name(Component.translatable("gui.cancel").withStyle(Label.BLANK))
+            .inputHint(new Input.LeftClick(false))
             .build();
 
     /**
      * Static close button for uniformity
      */
-    public static Label CLOSE = Label.builder()
+    public static final Label CLOSE = Label.builder()
             .item(Items.BARRIER)
             .name(Component.translatable("mco.selectServer.close").withStyle(Label.BLANK))
+            .inputHint(new Input.LeftClick(false))
             .build();
 
     /**

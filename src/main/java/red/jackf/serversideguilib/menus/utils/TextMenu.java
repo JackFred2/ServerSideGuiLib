@@ -24,7 +24,7 @@ public class TextMenu extends SucceedableMenu<String> {
     private final Component title;
     private final String startText;
 
-    public TextMenu(ServerPlayer player, Component title, String startText, CancellableCallback<String> callback) {
+    protected TextMenu(ServerPlayer player, Component title, String startText, CancellableCallback<String> callback) {
         super(player, callback);
         this.title = title;
         this.startText = startText;
