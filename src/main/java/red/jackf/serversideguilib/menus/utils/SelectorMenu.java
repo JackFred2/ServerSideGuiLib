@@ -91,18 +91,18 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
 
             // previous page
             if (page > 1)
-                menu.addButton(8, Button.leftClick(Label.item(Items.RED_CONCRETE, Component.translatable("spectatorMenu.previous_page").withStyle(Label.BLANK)), () -> {
+                menu.addButton(8, Button.leftClick(Label.item(Items.RED_CONCRETE, Component.translatable("spectatorMenu.previous_page").withStyle(Label.NORMAL)), () -> {
                     this.page = Math.max(1, page - 1);
                     Sounds.interact(player, ((float) page / maxPage) + 1);
                     open();
                 }));
 
             // page number display
-            menu.addButton(17, Button.display(Label.item(Items.PAPER, Component.translatable("book.pageIndicator", page, maxPage).withStyle(Label.BLANK))));
+            menu.addButton(17, Button.display(Label.item(Items.PAPER, Component.translatable("book.pageIndicator", page, maxPage).withStyle(Label.NORMAL))));
 
             // next page
             if (page < maxPage)
-                menu.addButton(26, Button.leftClick(Label.item(Items.LIME_CONCRETE, Component.translatable("spectatorMenu.next_page").withStyle(Label.BLANK)), () -> {
+                menu.addButton(26, Button.leftClick(Label.item(Items.LIME_CONCRETE, Component.translatable("spectatorMenu.next_page").withStyle(Label.NORMAL)), () -> {
                     this.page = Math.min(maxPage, page + 1);
                     Sounds.interact(player, ((float) page / maxPage) + 1);
                     open();
@@ -116,7 +116,7 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
                     .build(), input -> {
                 if (input instanceof Input.LeftClick click && !click.shift()) {
                     Sounds.interact(player);
-                    Menus.string(player, Component.literal("Set Filter"), this.filter, new CancellableCallback<>(s -> {
+                    Menus.string(player, Component.literal("Set Filter"), null, this.filter, new CancellableCallback<>(s -> {
                             Sounds.success(player);
                             this.filter = s;
                             this.filteredOptions.clear();

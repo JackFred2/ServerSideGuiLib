@@ -18,7 +18,7 @@ public class Labels {
      */
     public static final Label CANCEL = Label.builder()
             .item(Items.BARRIER)
-            .name(Component.translatable("gui.cancel").withStyle(Label.BLANK))
+            .name(Component.translatable("gui.cancel").withStyle(Label.NORMAL))
             .inputHint(new Input.LeftClick(false))
             .build();
 
@@ -27,9 +27,19 @@ public class Labels {
      */
     public static final Label CLOSE = Label.builder()
             .item(Items.BARRIER)
-            .name(Component.translatable("mco.selectServer.close").withStyle(Label.BLANK))
+            .name(Component.translatable("mco.selectServer.close").withStyle(Label.NORMAL))
             .inputHint(new Input.LeftClick(false))
             .build();
+
+    /**
+     * Divider used for separating parts of large GUIs
+     */
+    public static final Label DIVIDER = Label.item(Items.LIME_STAINED_GLASS_PANE, "");
+
+    /**
+     * Blank label, used for if input is still needed
+     */
+    public static final Label EMPTY = Label.builder().build();
 
     /**
      * Creates a player head from a given username

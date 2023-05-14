@@ -18,7 +18,7 @@ import java.util.List;
  * Represents a stack in a slot; this is just the visuals.
  */
 public record Label(ItemStack stack) {
-    public static final Style BLANK = Style.EMPTY.withColor(ChatFormatting.WHITE).withItalic(false);
+    public static final Style NORMAL = Style.EMPTY.withColor(ChatFormatting.WHITE).withItalic(false);
     public static final Style HINT = Style.EMPTY.withColor(ChatFormatting.GREEN).withItalic(false);
 
     public static LabelBuilder builder() {
@@ -63,7 +63,7 @@ public record Label(ItemStack stack) {
         }
 
         public LabelBuilder name(String name) {
-            this.name = Component.literal(name).withStyle(BLANK);
+            this.name = Component.literal(name).withStyle(NORMAL);
             return this;
         }
 

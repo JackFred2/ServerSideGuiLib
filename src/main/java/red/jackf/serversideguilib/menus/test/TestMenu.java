@@ -20,8 +20,11 @@ import java.util.LinkedHashMap;
 
 public class TestMenu extends Menu {
     private int lastUnboundedInt = 0;
-    private int lastBoundedClampedInt = 0;
-    private int lastBoundedNotClampedInt = 0;
+    private int lastBoundedInt = 0;
+
+    private double lastUnboundedDouble = 0.0;
+    private double lastBoundedDouble = 0.0;
+    private double lastUnboundedDoubleAllowNaN = 0.0;
 
     public TestMenu(ServerPlayer player) {
         super(player);
@@ -49,13 +52,16 @@ public class TestMenu extends Menu {
                 open();
             }));
         }));
-        menu.addButton(1, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 1)).name("Integer input test")
+
+        // Integer Tests
+        menu.addButton(1, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 1))
+                .name("Integer input test")
                 .hint("No bounds")
                 .hint("Last: " + lastUnboundedInt)
                 .inputHint("Open", new Input.LeftClick(false))
                 .build(), () -> {
             Sounds.interact(player);
-            Menus.integer(player, Component.literal("Unbounded Integer Test"), null, CancellableCallback.of(val -> {
+            Menus.integer(player, Component.literal("Unbounded Integer Test"), null, this.lastUnboundedInt, CancellableCallback.of(val -> {
                 Sounds.success(player);
                 this.lastUnboundedInt = val;
                 open();
@@ -64,37 +70,90 @@ public class TestMenu extends Menu {
                 open();
             }));
         }));
-        menu.addButton(2, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 2)).name("Integer input test")
-                .hint("Bounded: [0, 30], clamped")
-                .hint("Last: " + lastBoundedClampedInt)
-                .inputHint("Open", new Input.LeftClick(false))
-                .build(), () -> {
-            Sounds.interact(player);
-            Menus.integer(player, Component.literal("Bounded Integer Test [0, 30]"), null, 0, 30, CancellableCallback.of(val -> {
-                Sounds.success(player);
-                this.lastBoundedClampedInt = val;
-                open();
-            }, () -> {
-                Sounds.failure(player);
-                open();
-            }));
-        }));
-        menu.addButton(3, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 3))
+        menu.addButton(2, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 2))
                 .name("Integer input test")
-                .hint("Bounded: [0, 30], not clamped")
-                .hint("Last: " + lastBoundedNotClampedInt)
+                .hint("Bounded: [0, 30]")
+                .hint("Last: " + lastBoundedInt)
                 .inputHint("Open", new Input.LeftClick(false))
                 .build(), () -> {
             Sounds.interact(player);
-            Menus.integer(player, Component.literal("Bounded Integer Test [0, 30] [not clamped]"), null, 0, 30, false, CancellableCallback.of(val -> {
-                Sounds.success(player);
-                this.lastBoundedNotClampedInt = val;
-                open();
-            }, () -> {
-                Sounds.failure(player);
-                open();
-            }));
+            Menus.boundedInteger(player,
+                    Component.literal("Bounded Integer Test [0, 30]"),
+                    null,
+                    this.lastBoundedInt, 0, 30, CancellableCallback.of(val -> {
+                        Sounds.success(player);
+                        this.lastBoundedInt = val;
+                        open();
+                    }, () -> {
+                        Sounds.failure(player);
+                        open();
+                    }));
         }));
+
+        // Double Tests
+        menu.addButton(4, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 1))
+                .name("Double input test")
+                .hint("Unbounded")
+                .hint("Last: " + lastUnboundedDouble)
+                .inputHint("Open", new Input.LeftClick(false))
+                .build(), () -> {
+            Sounds.interact(player);
+            Menus.ddouble(player,
+                    Component.literal("Unbounded Double Test"),
+                    null,
+                    this.lastUnboundedDouble,
+                    CancellableCallback.of(d -> {
+                        Sounds.success(player);
+                        this.lastUnboundedDouble = d;
+                        open();
+                    }, () -> {
+                        Sounds.failure(player);
+                        open();
+                    }));
+        }));
+        menu.addButton(5, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 2))
+                .name("Double input test")
+                .hint("Unbounded w/ NaN")
+                .hint("Last: " + lastUnboundedDoubleAllowNaN)
+                .inputHint("Open", new Input.LeftClick(false))
+                .build(), () -> {
+            Sounds.interact(player);
+            Menus.doubleAllowingNaN(player,
+                    Component.literal("Double w/ NaN"),
+                    null,
+                    this.lastUnboundedDoubleAllowNaN,
+                    CancellableCallback.of(d -> {
+                        Sounds.success(player);
+                        this.lastUnboundedDoubleAllowNaN = d;
+                        open();
+                    }, () -> {
+                        Sounds.failure(player);
+                        open();
+                    }));
+        }));
+        menu.addButton(6, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 3))
+                .name("Double input test")
+                .hint("Bounded: [-90, 270]")
+                .hint("Last: " + lastBoundedDouble)
+                .inputHint("Open", new Input.LeftClick(false))
+                .build(), () -> {
+            Sounds.interact(player);
+            Menus.boundedDouble(player,
+                    Component.literal("Bounded Double Test"),
+                    null,
+                    this.lastBoundedDouble,
+                    -90.0,
+                    270.0,
+                    CancellableCallback.of(d -> {
+                        Sounds.success(player);
+                        this.lastBoundedDouble = d;
+                        open();
+                    }, () -> {
+                        Sounds.failure(player);
+                        open();
+                    }));
+        }));
+
         menu.addButton(-1, Button.close(() -> {
             Sounds.failure(player);
             player.closeContainer();

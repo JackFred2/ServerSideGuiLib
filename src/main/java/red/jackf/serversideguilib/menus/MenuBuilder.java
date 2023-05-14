@@ -129,7 +129,7 @@ public class MenuBuilder {
             @Override
             public AbstractContainerMenu createMenu(int invIndex, Inventory inventory, Player player) {
                 var menu = menuConstructor.create(invIndex, inventory);
-                ((SealedMenu) menu).seal(inputs);
+                ((SealedMenu) menu).ssgl_seal(inputs);
                 return menu;
             }
 

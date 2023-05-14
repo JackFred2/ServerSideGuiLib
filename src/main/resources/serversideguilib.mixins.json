@@ -4,7 +4,8 @@
   "package": "red.jackf.serversideguilib.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AbstractContainerMenuMixin"
+    "AbstractContainerMenuMixin",
+    "AnvilMenuMixin"
   ],
   "client": [
   ],
