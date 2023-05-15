@@ -2,6 +2,7 @@ package red.jackf.serversideguilib;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import red.jackf.serversideguilib.menus.test.TestMenu;
@@ -15,11 +16,12 @@ public class ServerSideGuiLib implements ModInitializer {
      */
     @Override
     public void onInitialize() {
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-            dispatcher.register(literal("ssgltest").executes(ctx -> {
-                new TestMenu(ctx.getSource().getPlayerOrException()).open();
-                return 0;
-            }))
-        );
+        if (FabricLoader.getInstance().isDevelopmentEnvironment())
+            CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+                dispatcher.register(literal("ssgltest").executes(ctx -> {
+                    new TestMenu(ctx.getSource().getPlayerOrException()).open();
+                    return 0;
+                }))
+            );
     }
 }

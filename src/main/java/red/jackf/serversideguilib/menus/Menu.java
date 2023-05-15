@@ -2,7 +2,7 @@ package red.jackf.serversideguilib.menus;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
-import red.jackf.serversideguilib.utils.Button;
+import red.jackf.serversideguilib.buttons.Button;
 
 /**
  * Class representing a menu to be opened by a player. Extend this class, then define your menu and open it for the player

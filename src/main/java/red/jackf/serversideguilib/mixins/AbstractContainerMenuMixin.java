@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import red.jackf.serversideguilib.utils.Button;
+import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.utils.Input;
 import red.jackf.serversideguilib.utils.SealedMenu;
 

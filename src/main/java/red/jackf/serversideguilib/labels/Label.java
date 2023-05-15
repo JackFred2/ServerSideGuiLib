@@ -45,6 +45,8 @@ public record Label(ItemStack stack) {
         private Component name = null;
         private final List<Component> hints = new ArrayList<>();
 
+        private boolean keepLore = false;
+
         public LabelBuilder() {}
 
         public LabelBuilder item(ItemLike item) {
@@ -87,6 +89,11 @@ public record Label(ItemStack stack) {
             return this;
         }
 
+        public LabelBuilder keepLore() {
+            this.keepLore = true;
+            return this;
+        }
+
         public Label build() {
             if (stack == ItemStack.EMPTY) return new Label(stack);
             if (name != null) stack.setHoverName(name);
@@ -96,6 +103,9 @@ public record Label(ItemStack stack) {
                 var loreTag = displayTag.getList(ItemStack.TAG_LORE, Tag.TAG_STRING);
                 hints.forEach(component -> loreTag.add(StringTag.valueOf(Component.Serializer.toJson(component))));
             }
+            if (!keepLore)
+                for (ItemStack.TooltipPart part : ItemStack.TooltipPart.values())
+                    stack.hideTooltipPart(part);
             return new Label(stack);
         }
     }

@@ -8,7 +8,7 @@ import net.minecraft.world.item.Items;
 import red.jackf.serversideguilib.labels.Label;
 import red.jackf.serversideguilib.menus.MenuBuilder;
 import red.jackf.serversideguilib.menus.SucceedableMenu;
-import red.jackf.serversideguilib.utils.Button;
+import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.utils.CancellableCallback;
 import red.jackf.serversideguilib.utils.Input;
 import red.jackf.serversideguilib.utils.Sounds;

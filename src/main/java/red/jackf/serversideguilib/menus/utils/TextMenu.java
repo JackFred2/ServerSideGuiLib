@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
+import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.labels.Label;
 import red.jackf.serversideguilib.labels.Labels;
 import red.jackf.serversideguilib.menus.MenuBuilder;
