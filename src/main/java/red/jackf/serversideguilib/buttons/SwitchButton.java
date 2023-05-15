@@ -60,8 +60,9 @@ public class SwitchButton {
                 .item(current)
                 .name(name);
         for (E option : clazz.getEnumConstants()) {
-            var stack = option.optionLabel().stack();
-            builder.hint((stack.hasCustomHoverName() ? stack.getHoverName() : Component.literal(option.name())).copy().withStyle(option == e ? ACTIVE : INACTIVE));
+            var optionName = option.optionLabel().name();
+            if (optionName == null) optionName = Component.literal(option.name());
+            builder.hint(optionName.copy().withStyle(option == e ? ACTIVE : INACTIVE));
         }
         builder.inputHint("Next", new Input.LeftClick(false));
         builder.inputHint("Previous", new Input.RightClick(false));

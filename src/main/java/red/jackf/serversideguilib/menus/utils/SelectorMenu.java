@@ -120,9 +120,10 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
                             Sounds.success(player);
                             this.filter = s;
                             this.filteredOptions.clear();
-                            this.options.stream()
-                                    .filter(pair -> pair.getFirst().stack().getHoverName().getString().contains(s))
-                                    .forEach(this.filteredOptions::add);
+                            this.options.stream().filter(pair -> {
+                                        var name = pair.getFirst().name();
+                                        return name != null && name.getString().contains(s);
+                                    }).forEach(this.filteredOptions::add);
                             updateMaxPage();
                             this.page = Mth.clamp(this.page, 1, this.maxPage);
                             open();

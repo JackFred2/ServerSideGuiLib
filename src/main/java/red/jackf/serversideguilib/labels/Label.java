@@ -17,29 +17,33 @@ import java.util.List;
 /**
  * Represents a stack in a slot; this is just the visuals.
  */
-public record Label(ItemStack stack) {
-    public static final Style NORMAL = Style.EMPTY.withColor(ChatFormatting.WHITE).withItalic(false);
-    public static final Style HINT = Style.EMPTY.withColor(ChatFormatting.GREEN).withItalic(false);
+public interface Label {
+    ItemStack stack();
+    @Nullable
+    Component name();
 
-    public static LabelBuilder builder() {
+    Style NORMAL = Style.EMPTY.withColor(ChatFormatting.WHITE).withItalic(false);
+    Style HINT = Style.EMPTY.withColor(ChatFormatting.GREEN).withItalic(false);
+
+    static LabelBuilder builder() {
         return new LabelBuilder();
     }
 
-    public static Label item(ItemLike item, String name) {
+   static Label item(ItemLike item, String name) {
         return builder()
                 .item(item)
                 .name(name)
                 .build();
     }
 
-    public static Label item(ItemLike item, Component name) {
+    static Label item(ItemLike item, Component name) {
         return builder()
                 .item(item)
                 .name(name)
                 .build();
     }
 
-    public static class LabelBuilder {
+    class LabelBuilder {
         private ItemStack stack = ItemStack.EMPTY;
         @Nullable
         private Component name = null;
@@ -95,8 +99,8 @@ public record Label(ItemStack stack) {
         }
 
         public Label build() {
-            if (stack == ItemStack.EMPTY) return new Label(stack);
             if (name != null) stack.setHoverName(name);
+            if (stack == ItemStack.EMPTY) return new Label.Empty(name);
             if (hints.size() > 0) {
                 var displayTag = stack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
                 if (!displayTag.contains(ItemStack.TAG_LORE, Tag.TAG_LIST)) displayTag.put(ItemStack.TAG_LORE, new ListTag());
@@ -106,7 +110,16 @@ public record Label(ItemStack stack) {
             if (!keepLore)
                 for (ItemStack.TooltipPart part : ItemStack.TooltipPart.values())
                     stack.hideTooltipPart(part);
-            return new Label(stack);
+            return new Label.Static(name, stack);
         }
     }
+
+    record Empty(Component name) implements Label {
+        @Override
+        public ItemStack stack() {
+            return ItemStack.EMPTY;
+        }
+    }
+
+    record Static(Component name, ItemStack stack) implements Label {}
 }
