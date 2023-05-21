@@ -32,7 +32,7 @@ public class TextMenu extends SucceedableMenu<String> {
     @Nullable
     private final Predicate<String> predicate;
 
-    protected TextMenu(ServerPlayer player, Component title, @Nullable Label additional, String startText,@Nullable Predicate<String> predicate, CancellableCallback<String> callback) {
+    protected TextMenu(ServerPlayer player, Component title, @Nullable Label additional, String startText, @Nullable Predicate<String> predicate, CancellableCallback<String> callback) {
         super(player, callback);
         this.title = title;
         this.additional = additional;
@@ -69,7 +69,7 @@ public class TextMenu extends SucceedableMenu<String> {
         }));
 
         if (additional != null) menu.addButton(AnvilMenu.ADDITIONAL_SLOT, Button.display(additional));
-        // prevents overwriting output with input on client end
+            // prevents overwriting output with input on client end
         else menu.addButton(AnvilMenu.ADDITIONAL_SLOT, Button.display(Labels.DIVIDER));
 
         menu.open(player);

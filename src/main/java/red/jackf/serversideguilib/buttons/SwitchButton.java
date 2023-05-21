@@ -16,14 +16,16 @@ public class SwitchButton {
     private static final Style ACTIVE = Style.EMPTY.withColor(ChatFormatting.GREEN).withItalic(false);
     private static final Style INACTIVE = Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true);
 
-    private SwitchButton() {}
+    private SwitchButton() {
+    }
 
     /**
      * Creates a boolean toggle button with a given name formatted with {@link Label#NORMAL}, and the default boolean
      * toggle labels.
-     * @param name Title of the label to be shown
+     *
+     * @param name         Title of the label to be shown
      * @param currentValue Current value of the boolean to show
-     * @param onChange Callback to be run on click; you should change the boolean's backing value here.
+     * @param onChange     Callback to be run on click; you should change the boolean's backing value here.
      * @return Button representing a boolean toggle
      */
     public static Button ofBoolean(String name, boolean currentValue, Consumer<Boolean> onChange) {
@@ -32,9 +34,10 @@ public class SwitchButton {
 
     /**
      * Creates a boolean toggle button with a given Component, and the default boolean toggle labels.
-     * @param name Title of the label to be shown
+     *
+     * @param name         Title of the label to be shown
      * @param currentValue Current value of the boolean to show
-     * @param onChange Callback to be run on click; you should change the boolean's backing value here.
+     * @param onChange     Callback to be run on click; you should change the boolean's backing value here.
      * @return Button representing a boolean toggle
      */
     public static Button ofBoolean(Component name, boolean currentValue, Consumer<Boolean> onChange) {
@@ -43,10 +46,11 @@ public class SwitchButton {
 
     /**
      * Creates a boolean toggle button with custom toggle labels
+     *
      * @param labelFactory {@link BooleanLabelFactory} that supplies labels based on a given boolean. See {@link SwitchButton#defaultBooleanLabelFactory(Component)}
-     *                                                for a reference implementation
+     *                     for a reference implementation
      * @param currentValue Current value of the boolean to show
-     * @param onChange Callback to be run on click; you should change the boolean's backing value here.
+     * @param onChange     Callback to be run on click; you should change the boolean's backing value here.
      * @return Button representing a boolean toggle
      */
     public static Button ofBoolean(BooleanLabelFactory labelFactory, boolean currentValue, Consumer<Boolean> onChange) {
@@ -57,15 +61,17 @@ public class SwitchButton {
      * <p>Creates an button which switches between an enum's constants. Left/Right click to switch between options.</p>
      * <p>The enum passed must implement {@link Labelled}, which supplies the labels for each option. The {@link Label#name()}
      * of each label is used as the hint text for the option, while<code>optionName</code> is the stack name. </p>
-     * @param optionName Title for the labels
-     * @param clazz Class object of the enum being switched through; must have at least 1 constant.
+     *
+     * @param optionName   Title for the labels
+     * @param clazz        Class object of the enum being switched through; must have at least 1 constant.
      * @param currentValue Current value of the enum to show
-     * @param onChange Callback to be run when the option is changed; you should change the enum's backing value here.
+     * @param onChange     Callback to be run when the option is changed; you should change the enum's backing value here.
+     * @param <E>          Enum which is being switched through
      * @return Button which switches between an enum's options
-     * @param <E> Enum which is being switched through
      */
     public static <E extends Enum<E> & Labelled> Button ofEnum(Component optionName, Class<E> clazz, E currentValue, Consumer<E> onChange) {
-        if (clazz.getEnumConstants().length == 0) throw new IllegalArgumentException("Must have at least 1 Enum Constant, found 0 in " + clazz.getSimpleName());
+        if (clazz.getEnumConstants().length == 0)
+            throw new IllegalArgumentException("Must have at least 1 Enum Constant, found 0 in " + clazz.getSimpleName());
         return new Button(enumLabelBuilder(optionName, clazz, currentValue), input -> {
             var ord = currentValue.ordinal();
             int newOrd = ord;
@@ -98,6 +104,7 @@ public class SwitchButton {
 
     /**
      * Example boolean label builder; uses lime and red concrete and True/False nomenclature in hints.
+     *
      * @param optionName Title of the labels, such as a setting name
      * @return Factory that returns a label for each boolean state
      */
@@ -119,6 +126,7 @@ public class SwitchButton {
         /**
          * The label that this option is represented by. This label's name is overridden by the switch button's name, and
          * instead is shown as a hint on the label
+         *
          * @return The label that represents this constant
          */
         Label optionLabel();

@@ -18,12 +18,14 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
 
     /**
      * Returns a hint of what key needs to be pressed to activate this specific handler.
+     *
      * @return Text Component displaying the required handler.
      */
     Component getHint();
 
     /**
      * A left mouse click. Can't be rebound. Does not require an item. Can be off-screen.
+     *
      * @param shift Whether either Shift button was pressed
      */
     record LeftClick(boolean shift) implements Input {
@@ -44,12 +46,14 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
     record DoubleLeftClick() implements Input {
         @Override
         public Component getHint() {
-            return Component.literal("2 x ").withStyle(BASE_STYLE).append(Input.format(Component.translatable("key.mouse.left")));
+            return Component.literal("2 x ").withStyle(BASE_STYLE)
+                    .append(Input.format(Component.translatable("key.mouse.left")));
         }
     }
 
     /**
      * A right mouse click. Can't be rebound. Does not require an item. Can be off-screen.
+     *
      * @param shift Whether either Shift button was pressed
      */
     record RightClick(boolean shift) implements Input {
@@ -76,6 +80,7 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
 
     /**
      * A drop button press (by default bound to Q). Can be rebound. Requires an item.
+     *
      * @param control Whether either Ctrl button was pressed
      */
     record Drop(boolean control) implements Input {
@@ -92,6 +97,7 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
     /**
      * A hotbar button press (by default bound to 1 -> 9). Can be rebound. Does not require an item. If held down by the player,
      * will continuously trigger.
+     *
      * @param index Hotbar slot pressed (0 indexed, so first slot = 0)
      */
     record Hotbar(int index) implements Input {
@@ -107,6 +113,7 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
 
     /**
      * Parses an Input from a given inventory interaction. Used in {@link red.jackf.serversideguilib.mixins.AbstractContainerMenuMixin}
+     *
      * @return Parsed Input, or null if invalid
      */
     @Nullable

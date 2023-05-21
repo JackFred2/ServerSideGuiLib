@@ -32,6 +32,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 5x1 menu using the Hopper's screen.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 5x1
      */
@@ -41,6 +42,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 3x3 menu using the Dispenser's screen.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 3x3
      */
@@ -50,6 +52,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 9x1 menu.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x1
      */
@@ -59,6 +62,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 9x2 menu.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x2
      */
@@ -68,6 +72,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 9x3 menu.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x3
      */
@@ -77,6 +82,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 9x4 menu.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x4
      */
@@ -86,6 +92,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 9x5 menu.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x5
      */
@@ -95,6 +102,7 @@ public class MenuBuilder {
 
     /**
      * Creates a 9x6 menu.
+     *
      * @param title Title shown on the menu
      * @return MenuBuilder instance for the 9x6
      */
@@ -104,8 +112,9 @@ public class MenuBuilder {
 
     /**
      * Adds a button to this menu in the designated slot
-     * @param slot Slot to add the button to. Can be negative, starting backwards from the end of the menu.
-     *             Can be {@link AbstractContainerMenu#SLOT_CLICKED_OUTSIDE} = -999 to run when clicked outside the menu.
+     *
+     * @param slot   Slot to add the button to. Can be negative, starting backwards from the end of the menu.
+     *               Can be {@link AbstractContainerMenu#SLOT_CLICKED_OUTSIDE} = -999 to run when clicked outside the menu.
      * @param button Button to place in the slot
      */
     public void addButton(Integer slot, Button button) {
@@ -153,6 +162,7 @@ public class MenuBuilder {
 
     /**
      * Shorthand to open this for a player
+     *
      * @param player Player to open this menu for.
      */
     public void open(ServerPlayer player) {

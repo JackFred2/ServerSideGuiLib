@@ -28,7 +28,8 @@ public class Ticker {
             // animated labels
             for (AnimatedLabelEntry animatedLabel : animatedLabels) {
                 var ticksSinceTracked = lastTick - animatedLabel.startTick;
-                var interval = ticksSinceTracked % ((long) animatedLabel.label.interval() * animatedLabel.label.stacks().size());
+                var interval = ticksSinceTracked % ((long) animatedLabel.label.interval() * animatedLabel.label.stacks()
+                        .size());
                 if (interval % animatedLabel.label.interval() == 0) {
                     var stack = animatedLabel.label.stacks().get((int) (interval / animatedLabel.label.interval()));
                     animatedLabel.slot.set(stack != null ? stack : ItemStack.EMPTY);
@@ -39,9 +40,11 @@ public class Ticker {
         });
     }
 
-    private record MenuTickerEntry(AbstractContainerMenu menu, MenuBuilder.MenuTicker ticker, long startTick) {}
+    private record MenuTickerEntry(AbstractContainerMenu menu, MenuBuilder.MenuTicker ticker, long startTick) {
+    }
 
-    private record AnimatedLabelEntry(AbstractContainerMenu menu, Slot slot, Label.Animated label, long startTick) {}
+    private record AnimatedLabelEntry(AbstractContainerMenu menu, Slot slot, Label.Animated label, long startTick) {
+    }
 
     public void addMenuTicker(AbstractContainerMenu menu, MenuBuilder.MenuTicker ticker) {
         menuTickers.add(new MenuTickerEntry(menu, ticker, lastTick));

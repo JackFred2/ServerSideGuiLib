@@ -11,6 +11,7 @@ import static net.minecraft.commands.Commands.literal;
 
 public class ServerSideGuiLib implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger();
+
     /**
      * Runs the mod initializer.
      */
@@ -18,10 +19,10 @@ public class ServerSideGuiLib implements ModInitializer {
     public void onInitialize() {
         if (FabricLoader.getInstance().isDevelopmentEnvironment())
             CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
-                dispatcher.register(literal("ssgltest").executes(ctx -> {
-                    new TestMenu(ctx.getSource().getPlayerOrException()).open();
-                    return 0;
-                }))
+                    dispatcher.register(literal("ssgltest").executes(ctx -> {
+                        new TestMenu(ctx.getSource().getPlayerOrException()).open();
+                        return 0;
+                    }))
             );
     }
 }

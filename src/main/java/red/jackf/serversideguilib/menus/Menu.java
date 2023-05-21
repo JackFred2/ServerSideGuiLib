@@ -14,6 +14,7 @@ public abstract class Menu {
     public Menu(ServerPlayer player) {
         this.player = player;
     }
+
     /**
      * Called to open this menu. Create your {@link MenuBuilder} here, populate with {@link MenuBuilder#addButton(Integer, Button)},
      * then {@link net.minecraft.server.level.ServerPlayer#openMenu(MenuProvider)} the {@link MenuBuilder#provider()}. <br />

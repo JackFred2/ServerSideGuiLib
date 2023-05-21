@@ -19,7 +19,7 @@ public class StackUtils {
         if (display == null || display.getTagType(ItemStack.TAG_LORE) != Tag.TAG_LIST) return new ArrayList<>();
         var lore = display.getList(ItemStack.TAG_LORE, Tag.TAG_STRING);
         var list = new ArrayList<Component>();
-        for(int i = 0; i < lore.size(); i++) {
+        for (int i = 0; i < lore.size(); i++) {
             String line = lore.getString(i);
 
             try {

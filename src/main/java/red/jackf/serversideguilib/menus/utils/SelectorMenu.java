@@ -5,10 +5,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
+import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.labels.Label;
 import red.jackf.serversideguilib.menus.MenuBuilder;
 import red.jackf.serversideguilib.menus.SucceedableMenu;
-import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.utils.CancellableCallback;
 import red.jackf.serversideguilib.utils.Input;
 import red.jackf.serversideguilib.utils.Sounds;
@@ -20,6 +20,7 @@ import java.util.List;
  * Opens a menu for a user to select an option. Resizes from 5x1, 9x1 up to 9x6, then paginated 9x6 if overflowing.
  * Can be cancelled. If paginated, also shows a search button filter by the label names; this currently uses translation
  * keys however.
+ *
  * @param <T> Type of option
  */
 public class SelectorMenu<T> extends SucceedableMenu<T> {
@@ -36,9 +37,10 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
 
     /**
      * Creates a selection menu from a map of label -> options.
-     * @param player Player to create the menu for
-     * @param title Title to display on the menu
-     * @param options List of {@link Label} -> option pairs to be displayed in the selector.
+     *
+     * @param player   Player to create the menu for
+     * @param title    Title to display on the menu
+     * @param options  List of {@link Label} -> option pairs to be displayed in the selector.
      * @param callback CancellableCallback with success being run when an option is selected, or failure being run on cancellation
      */
     protected SelectorMenu(ServerPlayer player, Component title, List<Pair<Label, T>> options, CancellableCallback<T> callback) {
@@ -91,18 +93,21 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
 
             // previous page
             if (page > 1)
-                menu.addButton(8, Button.leftClick(Label.item(Items.RED_CONCRETE, Component.translatable("spectatorMenu.previous_page").withStyle(Label.NORMAL)), () -> {
+                menu.addButton(8, Button.leftClick(Label.item(Items.RED_CONCRETE, Component.translatable("spectatorMenu.previous_page")
+                        .withStyle(Label.NORMAL)), () -> {
                     this.page = Math.max(1, page - 1);
                     Sounds.interact(player, ((float) page / maxPage) + 1);
                     open();
                 }));
 
             // page number display
-            menu.addButton(17, Button.display(Label.item(Items.PAPER, Component.translatable("book.pageIndicator", page, maxPage).withStyle(Label.NORMAL))));
+            menu.addButton(17, Button.display(Label.item(Items.PAPER, Component.translatable("book.pageIndicator", page, maxPage)
+                    .withStyle(Label.NORMAL))));
 
             // next page
             if (page < maxPage)
-                menu.addButton(26, Button.leftClick(Label.item(Items.LIME_CONCRETE, Component.translatable("spectatorMenu.next_page").withStyle(Label.NORMAL)), () -> {
+                menu.addButton(26, Button.leftClick(Label.item(Items.LIME_CONCRETE, Component.translatable("spectatorMenu.next_page")
+                        .withStyle(Label.NORMAL)), () -> {
                     this.page = Math.min(maxPage, page + 1);
                     Sounds.interact(player, ((float) page / maxPage) + 1);
                     open();
@@ -117,20 +122,20 @@ public class SelectorMenu<T> extends SucceedableMenu<T> {
                 if (input instanceof Input.LeftClick click && !click.shift()) {
                     Sounds.interact(player);
                     Menus.string(player, Component.literal("Set Filter"), null, this.filter, new CancellableCallback<>(s -> {
-                            Sounds.success(player);
-                            this.filter = s;
-                            this.filteredOptions.clear();
-                            this.options.stream().filter(pair -> {
-                                        var name = pair.getFirst().name();
-                                        return name != null && name.getString().contains(s);
-                                    }).forEach(this.filteredOptions::add);
-                            updateMaxPage();
-                            this.page = Mth.clamp(this.page, 1, this.maxPage);
-                            open();
-                        }, () -> {
-                            Sounds.failure(player);
-                            open();
-                        })
+                                Sounds.success(player);
+                                this.filter = s;
+                                this.filteredOptions.clear();
+                                this.options.stream().filter(pair -> {
+                                    var name = pair.getFirst().name();
+                                    return name != null && name.getString().contains(s);
+                                }).forEach(this.filteredOptions::add);
+                                updateMaxPage();
+                                this.page = Mth.clamp(this.page, 1, this.maxPage);
+                                open();
+                            }, () -> {
+                                Sounds.failure(player);
+                                open();
+                            })
                     );
                 } else if (input instanceof Input.RightClick click && !click.shift()) {
                     this.filter = "";

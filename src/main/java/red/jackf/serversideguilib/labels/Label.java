@@ -21,7 +21,9 @@ public sealed interface Label {
     default ItemStack asStack() {
         return stacks().size() == 0 ? ItemStack.EMPTY : stacks().get(0);
     }
+
     List<ItemStack> stacks();
+
     @Nullable
     Component name();
 
@@ -32,7 +34,7 @@ public sealed interface Label {
         return new LabelBuilder();
     }
 
-   static Label item(ItemLike item, String name) {
+    static Label item(ItemLike item, String name) {
         return builder()
                 .item(item)
                 .name(name)
@@ -55,7 +57,8 @@ public sealed interface Label {
 
         private boolean keepLore = false;
 
-        public LabelBuilder() {}
+        public LabelBuilder() {
+        }
 
         public LabelBuilder item(ItemLike item) {
             this.stacks.add(new ItemStack(item));

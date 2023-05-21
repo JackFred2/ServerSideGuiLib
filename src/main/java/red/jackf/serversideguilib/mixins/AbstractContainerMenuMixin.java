@@ -42,7 +42,8 @@ public class AbstractContainerMenuMixin implements SealedMenu {
         if (this.inputs == null) return;
         // clicked outside if this screen isn't handling it
         if (slotId == AbstractContainerMenu.SLOT_CLICKED_OUTSIDE && !this.inputs.containsKey(slotId)) return;
-        if (slotId != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE && this.slots.get(slotId).container instanceof Inventory) return;
+        if (slotId != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE && this.slots.get(slotId).container instanceof Inventory)
+            return;
         ci.cancel(); // prevent taking items from menu
         var parsed = Input.getInputFromRaw(slotId, button, clickType);
         if (parsed == null) return;

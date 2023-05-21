@@ -32,9 +32,11 @@ public abstract class AnvilMenuMixin extends AbstractContainerMenu implements SS
      */
     private static final ItemStack INVALID1 = Label.item(Items.BARRIER, "Invalid Input").stacks().get(0);
     private static final ItemStack INVALID2 = Label.item(Items.BARRIER, "Invalid Input").stacks().get(0);
+
     static {
         INVALID2.getOrCreateTag().putBoolean("ssgl_itemToggleHack", true);
     }
+
     @Unique
     private boolean invalidToggleHack;
     @Nullable
@@ -58,7 +60,8 @@ public abstract class AnvilMenuMixin extends AbstractContainerMenu implements SS
             ci.cancel();
             //noinspection AssignmentUsedAsCondition
             this.slots.get(AnvilMenu.RESULT_SLOT).set((predicate == null || predicate.test(newName)) ?
-                    Label.builder().item(TextMenu.RESULT_ITEM).name(newName).inputHint(new Input.LeftClick(false)).build().stacks().get(0) :
+                    Label.builder().item(TextMenu.RESULT_ITEM).name(newName).inputHint(new Input.LeftClick(false))
+                            .build().stacks().get(0) :
                     (invalidToggleHack = !invalidToggleHack) ? INVALID1 : INVALID2);
         }
     }

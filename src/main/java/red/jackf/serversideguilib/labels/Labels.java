@@ -11,7 +11,8 @@ import red.jackf.serversideguilib.utils.Input;
  * A collection of pre-defined labels to be used.
  */
 public class Labels {
-    private Labels() {}
+    private Labels() {
+    }
 
     /**
      * Static cancel button for uniformity
@@ -43,6 +44,7 @@ public class Labels {
 
     /**
      * Creates a player head from a given username
+     *
      * @param name Username for the head to use
      */
     public static Label.LabelBuilder playerHead(String name) {

@@ -84,7 +84,7 @@ public class Menus {
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
      * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
-     *                                  to add context via hints to the GUI i.e. bounds
+     *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0.
      * @param lowerBound   Lower bound that the result is allowed to be.
      * @param upperBound   Upper bound that the result is allowed to be.
@@ -92,7 +92,8 @@ public class Menus {
      */
     public static void boundedInteger(ServerPlayer player, Component title, @Nullable Label additional, @Nullable Integer initialValue, Integer lowerBound, Integer upperBound, CancellableCallback<Integer> callback) {
         var initial = String.valueOf(initialValue != null ? initialValue : Mth.clamp(0, lowerBound, upperBound));
-        if (upperBound < lowerBound) throw new IllegalArgumentException("Upper bound must be greater than or equal than lower bound");
+        if (upperBound < lowerBound)
+            throw new IllegalArgumentException("Upper bound must be greater than or equal than lower bound");
         if (additional == null && (lowerBound != Integer.MIN_VALUE || upperBound != Integer.MAX_VALUE)) {
             var label = Label.builder().name("Additional Info").item(Items.PAPER);
             var str = "x";
@@ -126,7 +127,7 @@ public class Menus {
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
      * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
-     *                                  to add context via hints to the GUI i.e. bounds
+     *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0.
      * @param callback     Callback that handles completion/cancellation
      */
@@ -155,18 +156,20 @@ public class Menus {
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
      * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
-     *                                  to add context via hints to the GUI i.e. bounds
+     *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0. Will throw an error if NaN.
      * @param lowerBound   Lower bound that the result is allowed to be. Will throw an error if NaN.
      * @param upperBound   Upper bound that the result is allowed to be. Will throw an error if NaN.
      * @param callback     Callback that handles completion/cancellation
      */
     public static void boundedDouble(ServerPlayer player, Component title, @Nullable Label additional, @Nullable Double initialValue, Double lowerBound, Double upperBound, CancellableCallback<Double> callback) {
-        if (initialValue != null && initialValue.isNaN()) throw new IllegalArgumentException("Initial value must not be NaN");
+        if (initialValue != null && initialValue.isNaN())
+            throw new IllegalArgumentException("Initial value must not be NaN");
         var initial = String.valueOf(initialValue != null ? initialValue : Mth.clamp(0, lowerBound, upperBound));
         if (lowerBound.isNaN()) throw new IllegalArgumentException("Lower bound must not be NaN");
         if (upperBound.isNaN()) throw new IllegalArgumentException("Upper bound must not be NaN");
-        if (upperBound < lowerBound) throw new IllegalArgumentException("Upper bound must be greater than or equal than lower bound");
+        if (upperBound < lowerBound)
+            throw new IllegalArgumentException("Upper bound must be greater than or equal than lower bound");
         if (additional == null && (lowerBound != Double.NEGATIVE_INFINITY || upperBound != Double.POSITIVE_INFINITY)) {
             var label = Label.builder().name("Additional Info").item(Items.PAPER);
             var str = "x";
@@ -205,13 +208,14 @@ public class Menus {
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
      * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
-     *                                  to add context via hints to the GUI i.e. bounds
+     *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0. Will throw an error if NaN.
      * @param callback     Callback that handles completion/cancellation
      */
     public static void ddouble(ServerPlayer player, Component title, @Nullable Label additional, @Nullable Double initialValue, CancellableCallback<Double> callback) {
-        if (initialValue != null && initialValue.isNaN()) throw new IllegalArgumentException("Initial value must not be NaN");
-        var initial = String.valueOf(initialValue != null ? initialValue :0);
+        if (initialValue != null && initialValue.isNaN())
+            throw new IllegalArgumentException("Initial value must not be NaN");
+        var initial = String.valueOf(initialValue != null ? initialValue : 0);
         string(player, title, additional, initial, s -> {
             try {
                 var d = Double.parseDouble(s);
@@ -240,7 +244,7 @@ public class Menus {
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
      * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
-     *                                  to add context via hints to the GUI i.e. bounds
+     *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0.
      * @param callback     Callback that handles completion/cancellation
      */
