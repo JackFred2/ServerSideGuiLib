@@ -15,11 +15,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import red.jackf.serversideguilib.buttons.Button;
-import red.jackf.serversideguilib.labels.AnimatedLabelTicker;
 import red.jackf.serversideguilib.labels.Label;
+import red.jackf.serversideguilib.menus.MenuBuilder;
 import red.jackf.serversideguilib.utils.Input;
 import red.jackf.serversideguilib.utils.SealedMenu;
+import red.jackf.serversideguilib.utils.Ticker;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,8 +40,9 @@ public class AbstractContainerMenuMixin implements SealedMenu {
     private void serversideguilib_hooks(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci) {
         // is not a SSGL screen
         if (this.inputs == null) return;
-        // a player inventory, or clicked outside if this screen isn't handling it
-        if ((slotId == AbstractContainerMenu.SLOT_CLICKED_OUTSIDE && !this.inputs.containsKey(slotId)) || this.slots.get(slotId).container instanceof Inventory) return;
+        // clicked outside if this screen isn't handling it
+        if (slotId == AbstractContainerMenu.SLOT_CLICKED_OUTSIDE && !this.inputs.containsKey(slotId)) return;
+        if (slotId != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE && this.slots.get(slotId).container instanceof Inventory) return;
         ci.cancel(); // prevent taking items from menu
         var parsed = Input.getInputFromRaw(slotId, button, clickType);
         if (parsed == null) return;
@@ -50,17 +53,20 @@ public class AbstractContainerMenuMixin implements SealedMenu {
 
     @Inject(method = "removed(Lnet/minecraft/world/entity/player/Player;)V", at = @At("HEAD"))
     private void serversideguilib_removeTrackedAnimated(CallbackInfo ci) {
-        AnimatedLabelTicker.INSTANCE.removed((AbstractContainerMenu) (Object) this);
+        Ticker.INSTANCE.removed((AbstractContainerMenu) (Object) this);
     }
 
-    public void ssgl_seal(Map<Integer, Button> inputs) {
+    public void ssgl_seal(Map<Integer, Button> inputs, List<MenuBuilder.MenuTicker> tickers) {
+        var menu = (AbstractContainerMenu) (Object) this;
         this.inputs = inputs;
+        if (tickers.size() > 0)
+            tickers.forEach(ticker -> Ticker.INSTANCE.addMenuTicker(menu, ticker));
         inputs.forEach((slotId, button) -> {
             if (slotId != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE) {
                 var slot = this.slots.get(slotId);
                 var label = button.label();
                 if (label instanceof Label.Animated animated) {
-                    AnimatedLabelTicker.INSTANCE.add((AbstractContainerMenu) (Object) this, slot, animated);
+                    Ticker.INSTANCE.addAnimated(menu, slot, animated);
                 }
                 slot.set(label.stacks().get(0));
             }

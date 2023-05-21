@@ -11,7 +11,9 @@ import red.jackf.serversideguilib.ServerSideGuiLib;
 import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.utils.SealedMenu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MenuBuilder {
@@ -20,6 +22,7 @@ public class MenuBuilder {
     private final MenuType.MenuSupplier<?> menuConstructor;
     private final Map<Integer, Button> inputs = new HashMap<>();
     private final int maxSlots;
+    private final List<MenuTicker> tickers = new ArrayList<>();
 
     public MenuBuilder(Component title, MenuType.MenuSupplier<?> menuConstructor, int maxSlots) {
         this.title = title;
@@ -110,10 +113,18 @@ public class MenuBuilder {
             ServerSideGuiLib.LOGGER.warn("Tried to add button outside of given slots: %d".formatted(slot));
             return;
         }
-        if (slot < 0) slot = maxSlots + slot;
+        if (slot < 0 && slot != SLOT_CLICKED_OUTSIDE) slot = maxSlots + slot;
         if (this.inputs.containsKey(slot))
             ServerSideGuiLib.LOGGER.warn("Overwriting button at slot %d".formatted(slot));
         this.inputs.put(slot, button);
+    }
+
+    public void addTicker(MenuTicker ticker) {
+        this.tickers.add(ticker);
+    }
+
+    public interface MenuTicker {
+        void tick(AbstractContainerMenu menu, long ticksOpen);
     }
 
     /**
@@ -129,7 +140,7 @@ public class MenuBuilder {
             @Override
             public AbstractContainerMenu createMenu(int invIndex, Inventory inventory, Player player) {
                 var menu = menuConstructor.create(invIndex, inventory);
-                ((SealedMenu) menu).ssgl_seal(inputs);
+                ((SealedMenu) menu).ssgl_seal(inputs, tickers);
                 return menu;
             }
 

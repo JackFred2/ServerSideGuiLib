@@ -64,7 +64,8 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
     }
 
     /**
-     * A middle mouse click. Can't be rebound. Does not require an item. Can be off-screen.
+     * A middle mouse click. Can't be rebound. Does not require an item. Can be off-screen. Requires the player to be
+     * in creative mode.
      */
     record MiddleClick() implements Input {
         @Override
@@ -89,7 +90,8 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
     }
 
     /**
-     * A hotbar button press (by default bound to 1 -> 9). Can be rebound. Does not require an item.
+     * A hotbar button press (by default bound to 1 -> 9). Can be rebound. Does not require an item. If held down by the player,
+     * will continuously trigger.
      * @param index Hotbar slot pressed (0 indexed, so first slot = 0)
      */
     record Hotbar(int index) implements Input {

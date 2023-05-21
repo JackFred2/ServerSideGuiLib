@@ -7,13 +7,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import red.jackf.serversideguilib.ServerSideGuiLib;
+import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.buttons.SwitchButton;
 import red.jackf.serversideguilib.labels.Label;
 import red.jackf.serversideguilib.labels.Labels;
 import red.jackf.serversideguilib.menus.Menu;
 import red.jackf.serversideguilib.menus.MenuBuilder;
+import red.jackf.serversideguilib.menus.ReturnableMenu;
 import red.jackf.serversideguilib.menus.utils.Menus;
-import red.jackf.serversideguilib.buttons.Button;
 import red.jackf.serversideguilib.utils.CancellableCallback;
 import red.jackf.serversideguilib.utils.Input;
 import red.jackf.serversideguilib.utils.Sounds;
@@ -38,9 +39,9 @@ public class TestMenu extends Menu {
 
     @Override
     public void open() {
-        var menu = MenuBuilder.make9x6(Component.literal("SSGL Test"));
+        var builder = MenuBuilder.make9x6(Component.literal("SSGL Test"));
 
-        menu.addButton(0, Button.leftClick(Labels.playerHead(player).name("Pagination Test")
+        builder.addButton(0, Button.leftClick(Labels.playerHead(player).name("Pagination Test")
                 .inputHint("Open", new Input.LeftClick(false))
                 .build(), () -> {
             Sounds.interact(player);
@@ -60,7 +61,7 @@ public class TestMenu extends Menu {
         }));
 
         // Integer Tests
-        menu.addButton(1, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 1))
+        builder.addButton(1, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 1))
                 .name("Integer input test")
                 .hint("No bounds")
                 .hint("Last: " + lastUnboundedInt)
@@ -76,7 +77,7 @@ public class TestMenu extends Menu {
                 open();
             }));
         }));
-        menu.addButton(2, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 2))
+        builder.addButton(2, Button.leftClick(Label.builder().item(new ItemStack(Items.WRITABLE_BOOK, 2))
                 .name("Integer input test")
                 .hint("Bounded: [0, 30]")
                 .hint("Last: " + lastBoundedInt)
@@ -97,7 +98,7 @@ public class TestMenu extends Menu {
         }));
 
         // Double Tests
-        menu.addButton(4, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 1))
+        builder.addButton(4, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 1))
                 .name("Double input test")
                 .hint("Unbounded")
                 .hint("Last: " + lastUnboundedDouble)
@@ -117,7 +118,7 @@ public class TestMenu extends Menu {
                         open();
                     }));
         }));
-        menu.addButton(5, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 2))
+        builder.addButton(5, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 2))
                 .name("Double input test")
                 .hint("Unbounded w/ NaN")
                 .hint("Last: " + lastUnboundedDoubleAllowNaN)
@@ -137,7 +138,7 @@ public class TestMenu extends Menu {
                         open();
                     }));
         }));
-        menu.addButton(6, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 3))
+        builder.addButton(6, Button.leftClick(Label.builder().item(new ItemStack(Items.FEATHER, 3))
                 .name("Double input test")
                 .hint("Bounded: [-90, 270]")
                 .hint("Last: " + lastBoundedDouble)
@@ -160,47 +161,104 @@ public class TestMenu extends Menu {
                     }));
         }));
 
-        menu.addButton(8, SwitchButton.ofBoolean("Boolean test", this.switchBooleanTest, b -> {
+        builder.addButton(8, SwitchButton.ofBoolean("Boolean test", this.switchBooleanTest, b -> {
             Sounds.interact(player);
             this.switchBooleanTest = b;
             open();
         }));
 
-        menu.addButton(9, SwitchButton.ofEnum(Component.literal("Enum Test").withStyle(Label.NORMAL), SwitchTest.class, this.switchEnumTest1, e -> {
+        builder.addButton(9, SwitchButton.ofEnum(Component.literal("Enum Test").withStyle(Label.NORMAL), SwitchTest.class, this.switchEnumTest1, e -> {
             Sounds.interact(player);
             this.switchEnumTest1 = e;
             open();
         }));
 
         if (switchEnumTest1 == SwitchTest.DELTA)
-            menu.addButton(10, SwitchButton.ofEnum(Component.literal("Enum Test 2").withStyle(Label.NORMAL), SwitchTest.class, this.switchEnumTest2, e -> {
+            builder.addButton(10, SwitchButton.ofEnum(Component.literal("Enum Test 2").withStyle(Label.NORMAL), SwitchTest.class, this.switchEnumTest2, e -> {
                 Sounds.interact(player);
                 this.switchEnumTest2 = e;
                 open();
             }));
 
         if (switchEnumTest2 == SwitchTest.GAMMA)
-            menu.addButton(11, SwitchButton.ofEnum(Component.literal("Enum Test 3").withStyle(Label.NORMAL), SwitchTest.class, this.switchEnumTest3, e -> {
+            builder.addButton(11, SwitchButton.ofEnum(Component.literal("Enum Test 3").withStyle(Label.NORMAL), SwitchTest.class, this.switchEnumTest3, e -> {
                 Sounds.interact(player);
                 this.switchEnumTest3 = e;
                 open();
             }));
 
-        menu.addButton(13, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 1").hint("Interval: 20").build()));
-        menu.addButton(14, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 2").hint("Interval: 30").interval(30).build()));
-        menu.addButton(15, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 3").hint("Interval: 40").interval(40).build()));
-        menu.addButton(16, new Button(Label.builder().item(Items.WHITE_CONCRETE).item(Items.LIGHT_GRAY_CONCRETE).name("Animated Test 4").hint("Interval: 2").interval(2).inputHint("Play Sound", new Input.MiddleClick()).build(), input -> {
+        builder.addButton(13, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 1").hint("Interval: 20").build()));
+        builder.addButton(14, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 2").hint("Interval: 30").interval(30).build()));
+        builder.addButton(15, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 3").hint("Interval: 40").interval(40).build()));
+        builder.addButton(16, new Button(Label.builder().item(Items.WHITE_CONCRETE).item(Items.LIGHT_GRAY_CONCRETE).name("Animated Test 4").hint("Interval: 2").interval(2).inputHint("Play Sound", new Input.MiddleClick()).build(), input -> {
             if (input instanceof Input.MiddleClick) {
                 Sounds.play(player, SoundEvents.ALLAY_AMBIENT_WITH_ITEM, 1f);
             }
         }));
 
-        menu.addButton(-1, Button.close(() -> {
+        builder.addButton(17, Button.display(Label.builder().item(Items.DARK_OAK_SIGN).name("Empty Slot Button Test").hint("Press a hotbar button on the slot below.").build()));
+        builder.addButton(26, new Button(Labels.EMPTY, input -> {
+            if (input instanceof Input.Hotbar hotbar) {
+                Sounds.interact(player, 1f + hotbar.index() / 8f);
+            }
+        }));
+
+        builder.addButton(18, new Button(Label.builder().item(Items.SCULK_SENSOR).name("Offside Test").inputHint(new Input.DoubleLeftClick()).build(), input -> {
+            if (input instanceof Input.DoubleLeftClick) {
+                Sounds.interact(player);
+                new OffsideTestMenu(player, () -> {
+                    Sounds.failure(player);
+                    open();
+                }).open();
+            }
+        }));
+
+        builder.addButton(-1, Button.close(() -> {
             Sounds.failure(player);
             player.closeContainer();
         }));
 
-        menu.open(player);
+        var oddHighlight = Label.item(Items.YELLOW_CONCRETE, "Ticker Test").asStack();
+
+        builder.addTicker(((menu, ticksOpen) -> {
+            if (ticksOpen % 10 == 0) {
+                for (int i = 45; i < 53; i++) {
+                    menu.slots.get(i).set(((ticksOpen / 10) + i) % 4 == 0 ? oddHighlight : ItemStack.EMPTY);
+                }
+            }
+        }));
+
+        builder.open(player);
+    }
+
+    private static class OffsideTestMenu extends ReturnableMenu {
+        private int lastSelected = -1;
+        public OffsideTestMenu(ServerPlayer player, Runnable callback) {
+            super(player, callback);
+        }
+
+        @Override
+        public void open() {
+            var builder = MenuBuilder.make3x3(Component.literal("Click a dust or off-screen"));
+            builder.addButton(4, Button.close(this::complete));
+            for (int i = 0; i < 9; i++) {
+                if (i != 4) {
+                    int finalI = i;
+                    builder.addButton(i, Button.leftClick(Label.item(lastSelected == i ? Items.GLOWSTONE_DUST : Items.GUNPOWDER, ""), () -> {
+                        Sounds.interact(player);
+                        lastSelected = finalI;
+                        open();
+                    }));
+                }
+            }
+            builder.addButton(MenuBuilder.SLOT_CLICKED_OUTSIDE, Button.leftClick(Labels.EMPTY, () -> {
+                Sounds.clear(player);
+                lastSelected = -1;
+                open();
+            }));
+
+            player.openMenu(builder.provider());
+        }
     }
 
     private enum SwitchTest implements SwitchButton.Labelled {
@@ -209,7 +267,7 @@ public class TestMenu extends Menu {
         DELTA(Label.builder().item(Items.DIAMOND).name("Delta").hint("With persistent hints").build()),
         GAMMA(Label.builder().item(Items.NETHERITE_AXE).name("Gamma").hint("Takes the below option names from label titles").hint("and replaces the original name").build()),
         EPSILON(Label.item(Items.PAPER, "Epsilon")),
-        RHO(Label.builder().item(Items.STRUCTURE_VOID).hint("Nameless test").build()),
+        RHO(Label.builder().item(Items.STRUCTURE_VOID).hint("Nameless Label Test").build()),
         PSI(Label.item(Items.SPAWNER, "Psi"));
 
         private final Label optionLabel;

@@ -18,6 +18,9 @@ import java.util.List;
  * Represents a stack in a slot; this is just the visuals.
  */
 public sealed interface Label {
+    default ItemStack asStack() {
+        return stacks().size() == 0 ? ItemStack.EMPTY : stacks().get(0);
+    }
     List<ItemStack> stacks();
     @Nullable
     Component name();
