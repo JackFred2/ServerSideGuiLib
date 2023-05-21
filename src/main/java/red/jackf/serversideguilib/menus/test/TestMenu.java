@@ -3,6 +3,7 @@ package red.jackf.serversideguilib.menus.test;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import red.jackf.serversideguilib.ServerSideGuiLib;
@@ -184,6 +185,15 @@ public class TestMenu extends Menu {
                 this.switchEnumTest3 = e;
                 open();
             }));
+
+        menu.addButton(13, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 1").hint("Interval: 20").build()));
+        menu.addButton(14, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 2").hint("Interval: 30").interval(30).build()));
+        menu.addButton(15, Button.display(Label.builder().item(Items.RED_CONCRETE).item(Items.LIME_CONCRETE).item(Items.BLUE_CONCRETE).name("Animated Test 3").hint("Interval: 40").interval(40).build()));
+        menu.addButton(16, new Button(Label.builder().item(Items.WHITE_CONCRETE).item(Items.LIGHT_GRAY_CONCRETE).name("Animated Test 4").hint("Interval: 2").interval(2).inputHint("Play Sound", new Input.MiddleClick()).build(), input -> {
+            if (input instanceof Input.MiddleClick) {
+                Sounds.play(player, SoundEvents.ALLAY_AMBIENT_WITH_ITEM, 1f);
+            }
+        }));
 
         menu.addButton(-1, Button.close(() -> {
             Sounds.failure(player);

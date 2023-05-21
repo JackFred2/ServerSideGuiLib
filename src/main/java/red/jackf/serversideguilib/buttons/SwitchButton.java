@@ -16,8 +16,7 @@ public class SwitchButton {
     private static final Style ACTIVE = Style.EMPTY.withColor(ChatFormatting.GREEN).withItalic(false);
     private static final Style INACTIVE = Style.EMPTY.withColor(ChatFormatting.GRAY).withItalic(true);
 
-    private SwitchButton() {
-    }
+    private SwitchButton() {}
 
     public static Button ofBoolean(String name, boolean currentValue, Consumer<Boolean> onChange) {
         return ofBoolean(Component.literal(name).withStyle(Label.NORMAL), currentValue, onChange);
@@ -55,10 +54,11 @@ public class SwitchButton {
     }
 
     private static <E extends Enum<E> & Labelled> Label enumLabelBuilder(Component name, Class<E> clazz, E e) {
-        var current = e.optionLabel().stack().copy();
-        var builder = Label.builder()
-                .item(current)
-                .name(name);
+        var builder = Label.builder().name(name);
+        for (var stack : e.optionLabel().stacks()) {
+            builder.item(stack);
+        }
+        if (e.optionLabel() instanceof Label.Animated animated) builder.interval(animated.interval());
         for (E option : clazz.getEnumConstants()) {
             var optionName = option.optionLabel().name();
             if (optionName == null) optionName = Component.literal(option.name());

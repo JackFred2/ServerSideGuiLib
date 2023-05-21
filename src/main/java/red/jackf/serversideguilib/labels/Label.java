@@ -17,8 +17,8 @@ import java.util.List;
 /**
  * Represents a stack in a slot; this is just the visuals.
  */
-public interface Label {
-    ItemStack stack();
+public sealed interface Label {
+    List<ItemStack> stacks();
     @Nullable
     Component name();
 
@@ -44,7 +44,8 @@ public interface Label {
     }
 
     class LabelBuilder {
-        private ItemStack stack = ItemStack.EMPTY;
+        private final List<ItemStack> stacks = new ArrayList<>();
+        private int interval = 20;
         @Nullable
         private Component name = null;
         private final List<Component> hints = new ArrayList<>();
@@ -54,12 +55,17 @@ public interface Label {
         public LabelBuilder() {}
 
         public LabelBuilder item(ItemLike item) {
-            this.stack = new ItemStack(item);
+            this.stacks.add(new ItemStack(item));
             return this;
         }
 
         public LabelBuilder item(ItemStack stack) {
-            this.stack = stack.copy();
+            this.stacks.add(stack.copy());
+            return this;
+        }
+
+        public LabelBuilder interval(int interval) {
+            this.interval = Math.max(interval, 1);
             return this;
         }
 
@@ -99,27 +105,38 @@ public interface Label {
         }
 
         public Label build() {
-            if (name != null) stack.setHoverName(name);
-            if (stack == ItemStack.EMPTY) return new Label.Empty(name);
-            if (hints.size() > 0) {
-                var displayTag = stack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
-                if (!displayTag.contains(ItemStack.TAG_LORE, Tag.TAG_LIST)) displayTag.put(ItemStack.TAG_LORE, new ListTag());
-                var loreTag = displayTag.getList(ItemStack.TAG_LORE, Tag.TAG_STRING);
-                hints.forEach(component -> loreTag.add(StringTag.valueOf(Component.Serializer.toJson(component))));
+            if (stacks.size() == 0) return new Label.Empty(name);
+            for (var stack : stacks) {
+                if (name != null) stack.setHoverName(name);
+                if (hints.size() > 0) {
+                    var displayTag = stack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
+                    if (!displayTag.contains(ItemStack.TAG_LORE, Tag.TAG_LIST))
+                        displayTag.put(ItemStack.TAG_LORE, new ListTag());
+                    var loreTag = displayTag.getList(ItemStack.TAG_LORE, Tag.TAG_STRING);
+                    hints.forEach(component -> loreTag.add(StringTag.valueOf(Component.Serializer.toJson(component))));
+                }
+                if (!keepLore)
+                    for (ItemStack.TooltipPart part : ItemStack.TooltipPart.values())
+                        stack.hideTooltipPart(part);
             }
-            if (!keepLore)
-                for (ItemStack.TooltipPart part : ItemStack.TooltipPart.values())
-                    stack.hideTooltipPart(part);
-            return new Label.Static(name, stack);
+            if (stacks.size() == 1) return new Label.Static(name, stacks.get(0));
+            else return new Label.Animated(name, stacks, interval);
         }
     }
 
-    record Empty(Component name) implements Label {
+    record Empty(@Nullable Component name) implements Label {
         @Override
-        public ItemStack stack() {
-            return ItemStack.EMPTY;
+        public List<ItemStack> stacks() {
+            return List.of(ItemStack.EMPTY);
         }
     }
 
-    record Static(Component name, ItemStack stack) implements Label {}
+    record Static(@Nullable Component name, ItemStack stack) implements Label {
+        public List<ItemStack> stacks() {
+            return List.of(stack);
+        }
+    }
+
+    record Animated(@Nullable Component name, List<ItemStack> stacks, int interval) implements Label {
+    }
 }

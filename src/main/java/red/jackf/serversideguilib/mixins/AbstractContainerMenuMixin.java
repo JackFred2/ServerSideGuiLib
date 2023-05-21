@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import red.jackf.serversideguilib.buttons.Button;
+import red.jackf.serversideguilib.labels.AnimatedLabelTicker;
+import red.jackf.serversideguilib.labels.Label;
 import red.jackf.serversideguilib.utils.Input;
 import red.jackf.serversideguilib.utils.SealedMenu;
 
@@ -46,11 +48,21 @@ public class AbstractContainerMenuMixin implements SealedMenu {
         input.handler().accept(parsed);
     }
 
+    @Inject(method = "removed(Lnet/minecraft/world/entity/player/Player;)V", at = @At("HEAD"))
+    private void serversideguilib_removeTrackedAnimated(CallbackInfo ci) {
+        AnimatedLabelTicker.INSTANCE.removed((AbstractContainerMenu) (Object) this);
+    }
+
     public void ssgl_seal(Map<Integer, Button> inputs) {
         this.inputs = inputs;
-        inputs.forEach((slot, buttons) -> {
-            if (slot != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE) {
-                this.slots.get(slot).set(buttons.label().stack());
+        inputs.forEach((slotId, button) -> {
+            if (slotId != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE) {
+                var slot = this.slots.get(slotId);
+                var label = button.label();
+                if (label instanceof Label.Animated animated) {
+                    AnimatedLabelTicker.INSTANCE.add((AbstractContainerMenu) (Object) this, slot, animated);
+                }
+                slot.set(label.stacks().get(0));
             }
         });
     }
