@@ -212,6 +212,8 @@ public class TestMenu extends Menu {
                 }).open();
             }
         }));
+        builder.addButton(19, Button.display(Label.builder().item(Items.DIAMOND_HELMET).name("Keep Lore Test").keepLore().hint("only here to remove \"unused method\" warnings").hint("in my IDE").build()));
+        builder.addButton(20, Button.display(Label.item(Items.DIAMOND_HELMET, "Default Lore Behavior")));
 
         builder.addButton(-1, Button.close(() -> {
             Sounds.failure(player);

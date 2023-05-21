@@ -88,8 +88,7 @@ public sealed interface Label {
         }
 
         public LabelBuilder inputHint(String action, Input input) {
-            this.hints.add(Component.literal(action + ": ").withStyle(Label.HINT).append(input.getHint()));
-            return this;
+            return hint(Component.literal(action + ": ").withStyle(Label.HINT).append(input.getHint()));
         }
 
         public LabelBuilder hint(Component hint) {
