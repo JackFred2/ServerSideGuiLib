@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.api.menus.utils;
+package red.jackf.serversideguilib.api.menus.input;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;

@@ -14,7 +14,7 @@ import red.jackf.serversideguilib.api.labels.Labels;
 import red.jackf.serversideguilib.api.menus.Menu;
 import red.jackf.serversideguilib.api.menus.MenuBuilder;
 import red.jackf.serversideguilib.api.menus.ReturnableMenu;
-import red.jackf.serversideguilib.api.menus.utils.Menus;
+import red.jackf.serversideguilib.api.menus.input.Menus;
 import red.jackf.serversideguilib.api.menus.CancellableCallback;
 import red.jackf.serversideguilib.api.buttons.Input;
 import red.jackf.serversideguilib.api.utils.Sounds;

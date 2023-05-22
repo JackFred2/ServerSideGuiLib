@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import red.jackf.serversideguilib.api.labels.Label;
-import red.jackf.serversideguilib.api.menus.utils.TextMenu;
+import red.jackf.serversideguilib.api.menus.input.TextMenu;
 import red.jackf.serversideguilib.api.buttons.Input;
 import red.jackf.serversideguilib.internal.utils.SSGLAnvilMenu;
 import red.jackf.serversideguilib.internal.utils.SealedMenu;
