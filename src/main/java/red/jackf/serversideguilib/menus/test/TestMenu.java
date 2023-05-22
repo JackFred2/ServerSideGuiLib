@@ -198,8 +198,8 @@ public class TestMenu extends Menu {
                 .item(Items.BLUE_CONCRETE).name("Animated Test 3").hint("Interval: 40").interval(40).build()));
         builder.addButton(16, new Button(Label.builder().item(Items.WHITE_CONCRETE).item(Items.LIGHT_GRAY_CONCRETE)
                 .name("Animated Test 4").hint("Interval: 2").interval(2)
-                .inputHint("Play Sound", new Input.MiddleClick()).build(), input -> {
-            if (input instanceof Input.MiddleClick) {
+                .inputHint("Play Sound", new Input.Drop(false)).build(), input -> {
+            if (input instanceof Input.Drop drop && !drop.control()) {
                 Sounds.play(player, SoundEvents.ALLAY_AMBIENT_WITH_ITEM, 1f);
             }
         }));

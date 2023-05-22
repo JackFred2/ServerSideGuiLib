@@ -70,7 +70,7 @@ public class Menus {
      * @param additional  {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)} to add
      *                    context via hints to the GUI i.e. bounds
      * @param initialText Initial text to be shown. Usually, the previously set value for e.g. a config. Note: the output
-     *                    field will not be updated when the text field is blank (MC-124327)
+     *                    field will not be updated when the text field is blank
      * @param callback    Callback that handles completion/cancellation
      */
     public static void string(ServerPlayer player, Component title, @Nullable Label additional, String initialText, CancellableCallback<String> callback) {

@@ -1,7 +1,6 @@
 package red.jackf.serversideguilib.menus;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.MenuProvider;
 import red.jackf.serversideguilib.buttons.Button;
 
 /**
@@ -17,7 +16,7 @@ public abstract class Menu {
 
     /**
      * Called to open this menu. Create your {@link MenuBuilder} here, populate with {@link MenuBuilder#addButton(Integer, Button)},
-     * then {@link net.minecraft.server.level.ServerPlayer#openMenu(MenuProvider)} the {@link MenuBuilder#provider()}. <br />
+     * then {@link MenuBuilder#open(ServerPlayer)} with the player.<br />
      * This may be called multiple times i.e. if you come back from a further menu.
      */
     public abstract void open();
