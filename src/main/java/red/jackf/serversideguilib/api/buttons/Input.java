@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.utils;
+package red.jackf.serversideguilib.api.buttons;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -112,7 +112,7 @@ public sealed interface Input permits Input.DoubleLeftClick, Input.Drop, Input.H
     }
 
     /**
-     * Parses an Input from a given inventory interaction. Used in {@link red.jackf.serversideguilib.mixins.AbstractContainerMenuMixin}
+     * Parses an Input from a given inventory interaction. Used in {@link red.jackf.serversideguilib.internal.mixins.AbstractContainerMenuMixin}
      *
      * @return Parsed Input, or null if invalid
      */

@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.mixins;
+package red.jackf.serversideguilib.internal.mixins;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import red.jackf.serversideguilib.buttons.Button;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.menus.MenuBuilder;
-import red.jackf.serversideguilib.utils.Input;
-import red.jackf.serversideguilib.utils.SealedMenu;
-import red.jackf.serversideguilib.utils.Ticker;
+import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.menus.MenuBuilder;
+import red.jackf.serversideguilib.api.buttons.Input;
+import red.jackf.serversideguilib.internal.utils.SealedMenu;
+import red.jackf.serversideguilib.internal.utils.Ticker;
 
 import java.util.List;
 import java.util.Map;

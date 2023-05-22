@@ -1,8 +1,7 @@
-package red.jackf.serversideguilib.buttons;
+package red.jackf.serversideguilib.api.buttons;
 
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.labels.Labels;
-import red.jackf.serversideguilib.utils.Input;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.labels.Labels;
 
 import java.util.function.Consumer;
 

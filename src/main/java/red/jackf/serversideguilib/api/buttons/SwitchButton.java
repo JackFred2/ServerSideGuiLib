@@ -1,11 +1,10 @@
-package red.jackf.serversideguilib.buttons;
+package red.jackf.serversideguilib.api.buttons;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Items;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.utils.Input;
+import red.jackf.serversideguilib.api.labels.Label;
 
 import java.util.function.Consumer;
 

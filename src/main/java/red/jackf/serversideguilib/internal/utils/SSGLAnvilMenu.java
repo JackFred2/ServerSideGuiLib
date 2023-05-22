@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.utils;
+package red.jackf.serversideguilib.internal.utils;
 
 import java.util.function.Predicate;
 

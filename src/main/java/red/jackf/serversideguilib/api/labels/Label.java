@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.labels;
+package red.jackf.serversideguilib.api.labels;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.ListTag;
@@ -6,16 +6,19 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PlayerHeadItem;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
-import red.jackf.serversideguilib.utils.Input;
+import red.jackf.serversideguilib.api.buttons.Input;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a stack in a slot; this is just the visuals.
+ * Represents the visuals of a button.
  */
 public sealed interface Label {
     default ItemStack asStack() {
@@ -34,6 +37,12 @@ public sealed interface Label {
         return new LabelBuilder();
     }
 
+    /**
+     * Creates a Label from a given item and name
+     * @param item Item to be used for the Label
+     * @param name Name to be used for the Label
+     * @return Completed label
+     */
     static Label item(ItemLike item, String name) {
         return builder()
                 .item(item)
@@ -41,11 +50,37 @@ public sealed interface Label {
                 .build();
     }
 
+    /**
+     * Creates a Label from a given item and name
+     * @param item Item to be used for the Label
+     * @param name Name to be used for the Label
+     * @return Completed label
+     */
     static Label item(ItemLike item, Component name) {
         return builder()
                 .item(item)
                 .name(name)
                 .build();
+    }
+
+    /**
+     * Creates a LabelBuilder starting with a player head from a given username
+     *
+     * @param name Username for the head to use
+     */
+    static Label.LabelBuilder playerHead(String name) {
+        var stack = new ItemStack(Items.PLAYER_HEAD);
+        stack.getOrCreateTag().putString(PlayerHeadItem.TAG_SKULL_OWNER, name);
+        return Label.builder().item(stack).name(name);
+    }
+
+    /**
+     * Creates a LabelBuilder starting with a player head from a given ServerPlayer
+     *
+     * @param player Player whose head to use
+     */
+    static Label.LabelBuilder playerHead(ServerPlayer player) {
+        return playerHead(player.getGameProfile().getName());
     }
 
     class LabelBuilder {

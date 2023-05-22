@@ -1,10 +1,10 @@
-package red.jackf.serversideguilib.menus;
+package red.jackf.serversideguilib.api.menus;
 
 import net.minecraft.server.level.ServerPlayer;
 
 /**
  * Represents a menu that runs a callback on exit. To do this, run {@link #complete()} when done i.e. by clicking a
- * {@link red.jackf.serversideguilib.labels.Labels#CANCEL} button. Commonly used to {@link Menu#open()} the previous
+ * {@link red.jackf.serversideguilib.api.labels.Labels#CANCEL} button. Commonly used to {@link Menu#open()} the previous
  * Menu.
  */
 public abstract class ReturnableMenu extends Menu {

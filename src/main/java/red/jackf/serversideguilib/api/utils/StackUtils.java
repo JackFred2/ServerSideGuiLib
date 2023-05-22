@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.utils;
+package red.jackf.serversideguilib.api.utils;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.Tag;
@@ -14,6 +14,11 @@ import java.util.List;
 public class StackUtils {
     private static final Style LORE_STYLE = Style.EMPTY.withColor(ChatFormatting.DARK_PURPLE).withItalic(true);
 
+    /**
+     * Get all lore from an itemstack's NBT.
+     * @param stack Stack to get lore from
+     * @return List of lore components on the stack. Can be empty, if no lore exists.
+     */
     public static List<Component> getLore(ItemStack stack) {
         var display = stack.getTagElement(ItemStack.TAG_DISPLAY);
         if (display == null || display.getTagType(ItemStack.TAG_LORE) != Tag.TAG_LIST) return new ArrayList<>();

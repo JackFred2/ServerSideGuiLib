@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.utils;
+package red.jackf.serversideguilib.api.menus;
 
 import java.util.function.Consumer;
 

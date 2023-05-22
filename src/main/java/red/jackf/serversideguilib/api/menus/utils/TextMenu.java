@@ -1,22 +1,20 @@
-package red.jackf.serversideguilib.menus.utils;
+package red.jackf.serversideguilib.api.menus.utils;
 
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
-import red.jackf.serversideguilib.buttons.Button;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.labels.Labels;
-import red.jackf.serversideguilib.menus.MenuBuilder;
-import red.jackf.serversideguilib.menus.SucceedableMenu;
-import red.jackf.serversideguilib.utils.*;
+import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.api.buttons.Input;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.labels.Labels;
+import red.jackf.serversideguilib.api.menus.CancellableCallback;
+import red.jackf.serversideguilib.api.menus.MenuBuilder;
+import red.jackf.serversideguilib.api.menus.SucceedableMenu;
+import red.jackf.serversideguilib.api.utils.Sounds;
+import red.jackf.serversideguilib.internal.utils.SSGLAnvilMenu;
 
 import java.util.function.Predicate;
 
@@ -75,25 +73,5 @@ public class TextMenu extends SucceedableMenu<String> {
         menu.open(player);
 
         if (predicate != null) ((SSGLAnvilMenu) player.containerMenu).ssgl_setTextPredicate(predicate);
-
-        player.containerMenu.addSlotListener(new ContainerListener() {
-            @Override
-            public void slotChanged(AbstractContainerMenu containerToSend, int slotIndex, ItemStack stack) {
-                if (slotIndex == AnvilMenu.RESULT_SLOT && stack.is(RESULT_ITEM)) {
-                    var lore = StackUtils.getLore(stack);
-                    if (lore.size() == 1 && lore.get(0).getString().startsWith("Accept")) return;
-                    var displayTag = stack.getOrCreateTagElement(ItemStack.TAG_DISPLAY);
-                    var listTag = new ListTag();
-                    listTag.add(StringTag.valueOf(Component.Serializer.toJson(
-                            Component.literal("Accept: ").withStyle(Label.HINT)
-                                    .append(new Input.LeftClick(false).getHint()))));
-                    displayTag.put(ItemStack.TAG_LORE, listTag);
-                }
-            }
-
-            @Override
-            public void dataChanged(AbstractContainerMenu containerMenu, int dataSlotIndex, int value) {
-            }
-        });
     }
 }

@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.menus;
+package red.jackf.serversideguilib.api.menus;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -7,9 +7,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import org.jetbrains.annotations.NotNull;
-import red.jackf.serversideguilib.ServerSideGuiLib;
-import red.jackf.serversideguilib.buttons.Button;
-import red.jackf.serversideguilib.utils.SealedMenu;
+import red.jackf.serversideguilib.internal.ServerSideGuiLib;
+import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.internal.utils.SealedMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.menus.utils;
+package red.jackf.serversideguilib.api.menus.utils;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
@@ -6,8 +6,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.utils.CancellableCallback;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.menus.CancellableCallback;
 
 import java.util.List;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class Menus {
      *
      * @param player      Player that this menu opens for
      * @param title       Title to show at the top of the menu
-     * @param additional  {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)} to add
+     * @param additional  {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)} to add
      *                    context via hints to the GUI i.e. bounds
      * @param initialText Initial text to be shown. Usually, the previously set value for e.g. a config. Note: the output
      *                    field will not be updated when the text field is blank (MC-124327)
@@ -67,7 +67,7 @@ public class Menus {
      *
      * @param player      Player that this menu opens for
      * @param title       Title to show at the top of the menu
-     * @param additional  {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)} to add
+     * @param additional  {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)} to add
      *                    context via hints to the GUI i.e. bounds
      * @param initialText Initial text to be shown. Usually, the previously set value for e.g. a config. Note: the output
      *                    field will not be updated when the text field is blank
@@ -83,7 +83,7 @@ public class Menus {
      *
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
-     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
+     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)}
      *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0.
      * @param lowerBound   Lower bound that the result is allowed to be.
@@ -126,7 +126,7 @@ public class Menus {
      *
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
-     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
+     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)}
      *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0.
      * @param callback     Callback that handles completion/cancellation
@@ -155,7 +155,7 @@ public class Menus {
      *
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
-     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
+     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)}
      *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0. Will throw an error if NaN.
      * @param lowerBound   Lower bound that the result is allowed to be. Will throw an error if NaN.
@@ -207,7 +207,7 @@ public class Menus {
      *
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
-     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
+     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)}
      *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0. Will throw an error if NaN.
      * @param callback     Callback that handles completion/cancellation
@@ -243,7 +243,7 @@ public class Menus {
      *
      * @param player       Player that this menu opens for
      * @param title        Title to show at the top of the menu
-     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.labels.Label.LabelBuilder#hint(String)}
+     * @param additional   {@link Label} that gets put in the additional slot; use this with {@link red.jackf.serversideguilib.api.labels.Label.LabelBuilder#hint(String)}
      *                     to add context via hints to the GUI i.e. bounds
      * @param initialValue Initial value to be shown. Usually the previous value. Defaults to 0.
      * @param callback     Callback that handles completion/cancellation

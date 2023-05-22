@@ -1,17 +1,17 @@
-package red.jackf.serversideguilib.menus.utils;
+package red.jackf.serversideguilib.api.menus.utils;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
-import red.jackf.serversideguilib.buttons.Button;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.menus.MenuBuilder;
-import red.jackf.serversideguilib.menus.SucceedableMenu;
-import red.jackf.serversideguilib.utils.CancellableCallback;
-import red.jackf.serversideguilib.utils.Input;
-import red.jackf.serversideguilib.utils.Sounds;
+import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.menus.MenuBuilder;
+import red.jackf.serversideguilib.api.menus.SucceedableMenu;
+import red.jackf.serversideguilib.api.menus.CancellableCallback;
+import red.jackf.serversideguilib.api.buttons.Input;
+import red.jackf.serversideguilib.api.utils.Sounds;
 
 import java.util.ArrayList;
 import java.util.List;

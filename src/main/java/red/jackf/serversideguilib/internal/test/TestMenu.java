@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.menus.test;
+package red.jackf.serversideguilib.internal.test;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -6,18 +6,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import red.jackf.serversideguilib.ServerSideGuiLib;
-import red.jackf.serversideguilib.buttons.Button;
-import red.jackf.serversideguilib.buttons.SwitchButton;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.labels.Labels;
-import red.jackf.serversideguilib.menus.Menu;
-import red.jackf.serversideguilib.menus.MenuBuilder;
-import red.jackf.serversideguilib.menus.ReturnableMenu;
-import red.jackf.serversideguilib.menus.utils.Menus;
-import red.jackf.serversideguilib.utils.CancellableCallback;
-import red.jackf.serversideguilib.utils.Input;
-import red.jackf.serversideguilib.utils.Sounds;
+import red.jackf.serversideguilib.internal.ServerSideGuiLib;
+import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.api.buttons.SwitchButton;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.labels.Labels;
+import red.jackf.serversideguilib.api.menus.Menu;
+import red.jackf.serversideguilib.api.menus.MenuBuilder;
+import red.jackf.serversideguilib.api.menus.ReturnableMenu;
+import red.jackf.serversideguilib.api.menus.utils.Menus;
+import red.jackf.serversideguilib.api.menus.CancellableCallback;
+import red.jackf.serversideguilib.api.buttons.Input;
+import red.jackf.serversideguilib.api.utils.Sounds;
 
 import java.util.LinkedHashMap;
 
@@ -41,7 +41,7 @@ public class TestMenu extends Menu {
     public void open() {
         var builder = MenuBuilder.make9x6(Component.literal("SSGL Test"));
 
-        builder.addButton(0, Button.leftClick(Labels.playerHead(player).name("Pagination Test")
+        builder.addButton(0, Button.leftClick(Label.playerHead(player).name("Pagination Test")
                 .inputHint("Open", new Input.LeftClick(false))
                 .build(), () -> {
             Sounds.interact(player);

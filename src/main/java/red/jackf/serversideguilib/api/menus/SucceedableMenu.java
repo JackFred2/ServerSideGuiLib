@@ -1,8 +1,7 @@
-package red.jackf.serversideguilib.menus;
+package red.jackf.serversideguilib.api.menus;
 
 
 import net.minecraft.server.level.ServerPlayer;
-import red.jackf.serversideguilib.utils.CancellableCallback;
 
 /**
  * Represents a menu that can optionally return a result. Commonly used when changing settings.

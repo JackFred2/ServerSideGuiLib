@@ -3,7 +3,7 @@
   "id": "serversideguilib",
   "version": "${version}",
   "name": "ServerSideGuiLib",
-  "description": "Provides a library to easily create GUIs on the server side, using Chest Menus and similar",
+  "description": "Provides a library to easily create rich GUIs on the server side",
   "authors": [
     "JackFred"
   ],
@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "red.jackf.serversideguilib.ServerSideGuiLib"
+      "red.jackf.serversideguilib.internal.ServerSideGuiLib"
     ]
   },
   "mixins": [

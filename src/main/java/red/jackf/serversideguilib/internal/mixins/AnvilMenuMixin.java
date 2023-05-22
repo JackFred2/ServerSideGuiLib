@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.mixins;
+package red.jackf.serversideguilib.internal.mixins;
 
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -12,11 +12,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.menus.utils.TextMenu;
-import red.jackf.serversideguilib.utils.Input;
-import red.jackf.serversideguilib.utils.SSGLAnvilMenu;
-import red.jackf.serversideguilib.utils.SealedMenu;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.menus.utils.TextMenu;
+import red.jackf.serversideguilib.api.buttons.Input;
+import red.jackf.serversideguilib.internal.utils.SSGLAnvilMenu;
+import red.jackf.serversideguilib.internal.utils.SealedMenu;
 
 import java.util.function.Predicate;
 
@@ -58,11 +58,17 @@ public abstract class AnvilMenuMixin extends AbstractContainerMenu implements SS
     private void ssgl_updateItemName(String newName, CallbackInfo ci) {
         if (((SealedMenu) this).ssgl_isSealed()) {
             ci.cancel();
-            //noinspection AssignmentUsedAsCondition
-            this.slots.get(AnvilMenu.RESULT_SLOT).set((predicate == null || predicate.test(newName)) ?
-                    Label.builder().item(TextMenu.RESULT_ITEM).name(newName).inputHint(new Input.LeftClick(false))
-                            .build().stacks().get(0) :
-                    (invalidToggleHack = !invalidToggleHack) ? INVALID1 : INVALID2);
+            var slot = this.slots.get(AnvilMenu.RESULT_SLOT);
+            if (predicate == null || predicate.test(newName)) {
+                slot.set(Label.builder().item(TextMenu.RESULT_ITEM)
+                        .name(newName)
+                        .inputHint("Accept", new Input.LeftClick(false))
+                        .build()
+                        .asStack());
+            } else {
+                //noinspection AssignmentUsedAsCondition
+                slot.set((invalidToggleHack = !invalidToggleHack) ? INVALID1 : INVALID2);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package red.jackf.serversideguilib.utils;
+package red.jackf.serversideguilib.api.utils;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -6,7 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 
 /**
- * Collection of common sounds to play when using menus.
+ * Collection of helper methods to play common sounds when using menus.
  */
 public class Sounds {
     private Sounds() {

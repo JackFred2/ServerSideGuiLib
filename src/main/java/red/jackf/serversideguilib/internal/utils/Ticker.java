@@ -1,11 +1,11 @@
-package red.jackf.serversideguilib.utils;
+package red.jackf.serversideguilib.internal.utils;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import red.jackf.serversideguilib.labels.Label;
-import red.jackf.serversideguilib.menus.MenuBuilder;
+import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.menus.MenuBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

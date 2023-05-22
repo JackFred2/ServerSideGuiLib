@@ -1,11 +1,8 @@
-package red.jackf.serversideguilib.labels;
+package red.jackf.serversideguilib.api.labels;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PlayerHeadItem;
-import red.jackf.serversideguilib.utils.Input;
+import red.jackf.serversideguilib.api.buttons.Input;
 
 /**
  * A collection of pre-defined labels to be used.
@@ -38,25 +35,7 @@ public class Labels {
     public static final Label DIVIDER = Label.item(Items.LIME_STAINED_GLASS_PANE, "");
 
     /**
-     * Blank label, used for if input is still needed
+     * Blank label, used for if input is needed on an empty slot
      */
     public static final Label EMPTY = Label.builder().build();
-
-    /**
-     * Creates a player head from a given username
-     *
-     * @param name Username for the head to use
-     */
-    public static Label.LabelBuilder playerHead(String name) {
-        var stack = new ItemStack(Items.PLAYER_HEAD);
-        stack.getOrCreateTag().putString(PlayerHeadItem.TAG_SKULL_OWNER, name);
-        return Label.builder().item(stack).name(name);
-    }
-
-    /**
-     * Creates a head from a given player
-     */
-    public static Label.LabelBuilder playerHead(ServerPlayer player) {
-        return playerHead(player.getGameProfile().getName());
-    }
 }

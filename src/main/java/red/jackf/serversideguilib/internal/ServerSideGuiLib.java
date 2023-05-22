@@ -1,11 +1,11 @@
-package red.jackf.serversideguilib;
+package red.jackf.serversideguilib.internal;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import red.jackf.serversideguilib.menus.test.TestMenu;
+import red.jackf.serversideguilib.internal.test.TestMenu;
 
 import static net.minecraft.commands.Commands.literal;
 
