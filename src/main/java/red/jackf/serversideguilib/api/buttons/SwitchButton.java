@@ -6,6 +6,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Items;
 import red.jackf.serversideguilib.api.labels.Label;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -57,21 +59,58 @@ public class SwitchButton {
     }
 
     /**
-     * <p>Creates an button which switches between an enum's constants. Left/Right click to switch between options.</p>
-     * <p>The enum passed must implement {@link Labelled}, which supplies the labels for each option. The {@link Label#name()}
+     * <p>Creates a button which switches between an enum's constants. Left/Right click to switch between options.</p>
+     * <p>This version takes an enum implementing {@link Labelled}, which supplies the labels for each option. The {@link Label#name()}
      * of each label is used as the hint text for the option, while<code>optionName</code> is the stack name. </p>
      *
-     * @param optionName   Title for the labels
+     * @param name   Title for the labels
      * @param clazz        Class object of the enum being switched through; must have at least 1 constant.
      * @param currentValue Current value of the enum to show
      * @param onChange     Callback to be run when the option is changed; you should change the enum's backing value here.
      * @param <E>          Enum which is being switched through
      * @return Button which switches between an enum's options
      */
-    public static <E extends Enum<E> & Labelled> Button ofEnum(Component optionName, Class<E> clazz, E currentValue, Consumer<E> onChange) {
+    public static <E extends Enum<E> & Labelled> Button ofEnum(Component name, Class<E> clazz, E currentValue, Consumer<E> onChange) {
+        var labels = new HashMap<E, Label>();
+        for (E constant : clazz.getEnumConstants())
+            labels.put(constant, constant.optionLabel());
+        return ofEnum(name, clazz, currentValue, labels, onChange);
+    }
+
+    /**
+     * Creates a button that switches between an enum's constants. This version lets you use an external Label -> E mapping,
+     * useful for enums that you don't control. Left/Right click to switch between options.
+     * @param name   Title for the button
+     * @param clazz        Class object of the enum being switched through; must have at least 1 constant.
+     * @param currentValue Current value of the enum to show
+     * @param labels       Mapping from Enum values to Labels. This *must* contain a mapping for every constant in the enum,
+     *                     or will throw an exception.
+     * @param onChange     Callback to be run when the option is changed; you should change the enum's backing value here.
+     * @param <E>          Enum which is being switched through
+     * @return Button which switches between an enum's options
+     */
+    public static <E extends Enum<E>> Button ofEnum(Component name, Class<E> clazz, E currentValue, Map<E, Label> labels, Consumer<E> onChange) {
         if (clazz.getEnumConstants().length == 0)
             throw new IllegalArgumentException("Must have at least 1 Enum Constant, found 0 in " + clazz.getSimpleName());
-        return new Button(enumLabelBuilder(optionName, clazz, currentValue), input -> {
+        for (E constant : clazz.getEnumConstants())
+            if (!labels.containsKey(constant))
+                throw new IllegalArgumentException("Must have a Label for every mapping, but missing one for constant " + constant);
+
+        // make label from existing
+        var existingLabel = labels.get(currentValue);
+        var builder = Label.builder().name(name);
+        for (var stack : existingLabel.stacks())
+            builder.item(stack);
+        if (existingLabel instanceof Label.Animated animated) builder.interval(animated.interval());
+        for (E option : clazz.getEnumConstants()) {
+            var optionName = labels.get(option).name();
+            if (optionName == null) optionName = Component.literal(option.name());
+            builder.hint(optionName.copy().withStyle(option == currentValue ? ACTIVE : INACTIVE));
+        }
+        builder.inputHint("Next", new Input.LeftClick(false));
+        builder.inputHint("Previous", new Input.RightClick(false));
+
+        return new Button(builder.build(), input -> {
             var ord = currentValue.ordinal();
             int newOrd = ord;
             if (input instanceof Input.LeftClick click && !click.shift()) {
@@ -83,22 +122,6 @@ public class SwitchButton {
             }
             onChange.accept(clazz.getEnumConstants()[newOrd]);
         });
-    }
-
-    private static <E extends Enum<E> & Labelled> Label enumLabelBuilder(Component name, Class<E> clazz, E e) {
-        var builder = Label.builder().name(name);
-        for (var stack : e.optionLabel().stacks()) {
-            builder.item(stack);
-        }
-        if (e.optionLabel() instanceof Label.Animated animated) builder.interval(animated.interval());
-        for (E option : clazz.getEnumConstants()) {
-            var optionName = option.optionLabel().name();
-            if (optionName == null) optionName = Component.literal(option.name());
-            builder.hint(optionName.copy().withStyle(option == e ? ACTIVE : INACTIVE));
-        }
-        builder.inputHint("Next", new Input.LeftClick(false));
-        builder.inputHint("Previous", new Input.RightClick(false));
-        return builder.build();
     }
 
     /**

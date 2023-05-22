@@ -7,8 +7,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import org.jetbrains.annotations.NotNull;
-import red.jackf.serversideguilib.internal.ServerSideGuiLib;
 import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.internal.ServerSideGuiLib;
 import red.jackf.serversideguilib.internal.utils.SealedMenu;
 
 import java.util.ArrayList;

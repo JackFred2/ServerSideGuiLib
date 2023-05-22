@@ -6,18 +6,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import red.jackf.serversideguilib.internal.ServerSideGuiLib;
 import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.api.buttons.Input;
 import red.jackf.serversideguilib.api.buttons.SwitchButton;
 import red.jackf.serversideguilib.api.labels.Label;
 import red.jackf.serversideguilib.api.labels.Labels;
+import red.jackf.serversideguilib.api.menus.CancellableCallback;
 import red.jackf.serversideguilib.api.menus.Menu;
 import red.jackf.serversideguilib.api.menus.MenuBuilder;
 import red.jackf.serversideguilib.api.menus.ReturnableMenu;
 import red.jackf.serversideguilib.api.menus.input.Menus;
-import red.jackf.serversideguilib.api.menus.CancellableCallback;
-import red.jackf.serversideguilib.api.buttons.Input;
 import red.jackf.serversideguilib.api.utils.Sounds;
+import red.jackf.serversideguilib.internal.ServerSideGuiLib;
 
 import java.util.LinkedHashMap;
 

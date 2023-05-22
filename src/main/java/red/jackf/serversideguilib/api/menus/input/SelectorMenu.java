@@ -6,11 +6,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Items;
 import red.jackf.serversideguilib.api.buttons.Button;
+import red.jackf.serversideguilib.api.buttons.Input;
 import red.jackf.serversideguilib.api.labels.Label;
+import red.jackf.serversideguilib.api.menus.CancellableCallback;
 import red.jackf.serversideguilib.api.menus.MenuBuilder;
 import red.jackf.serversideguilib.api.menus.SucceedableMenu;
-import red.jackf.serversideguilib.api.menus.CancellableCallback;
-import red.jackf.serversideguilib.api.buttons.Input;
 import red.jackf.serversideguilib.api.utils.Sounds;
 
 import java.util.ArrayList;
